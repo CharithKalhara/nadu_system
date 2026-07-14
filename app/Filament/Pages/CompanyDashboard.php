@@ -11,13 +11,20 @@ class CompanyDashboard extends Page
 
     public function mount(): void
     {
-        if (! session()->has('company_id')) {
+        $companyId = request()->query('company', session('company_id'));
+
+        if (! $companyId) {
             $this->redirectRoute('filament.admin.resources.companies.index');
 
             return;
         }
 
-        $this->company = Company::findOrFail(session('company_id'));
+        $this->company = Company::findOrFail($companyId);
+
+        session([
+            'company_id' => $this->company->id,
+            'company_table' => $this->company->table_name,
+        ]);
     }
 
     public function getTitle(): string

@@ -10,6 +10,17 @@ class ListNadus extends ListRecords
 {
     protected static string $resource = NaduResource::class;
 
+    public function mount(): void
+    {
+        if (! session()->has('company_table')) {
+            $this->redirectRoute('filament.admin.resources.companies.index');
+
+            return;
+        }
+
+        parent::mount();
+    }
+
     protected function getHeaderActions(): array
     {
         return [
