@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="{{ asset('css/company-dashboard.css') }}">
-
 <x-filament-panels::page>
     <div class="company-dashboard">
         <x-filament::section>

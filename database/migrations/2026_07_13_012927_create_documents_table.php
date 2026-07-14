@@ -11,9 +11,9 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('nadu_id')
-                ->constrained('cases')
-                ->cascadeOnDelete();
+            // Nadu records live in a separate table for each company, so a
+            // database foreign key to one shared table cannot be used here.
+            $table->unsignedBigInteger('nadu_id')->index();
 
             $table->string('document_type');
             $table->string('file_name');

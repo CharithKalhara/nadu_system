@@ -9,7 +9,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class SithasiService
 {
-    public function generate(Nadu $case): string
+    public function generate(Nadu $case): Document
     {
         $template = new TemplateProcessor(
             storage_path('app/documents/sithasi.docx')
@@ -45,7 +45,7 @@ class SithasiService
         $template->saveAs($filePath);
 
         // Save document record to database
-        Document::create([
+        return Document::create([
             'company_id' => session('company_id'),
             'nadu_id' => $case->id,
             'document_type' => 'Sithasi',
@@ -54,6 +54,5 @@ class SithasiService
             'generated_by' => Auth::id(),
         ]);
 
-        return $filePath;
     }
 }

@@ -9,9 +9,13 @@ use Filament\Pages\Page;
 
 class CompanyDashboard extends Page
 {
+    protected static bool $shouldRegisterNavigation = false;
+
     protected string $view = 'filament.pages.company-dashboard';
 
     protected static string $layout = 'layouts.company-workspace';
+
+    protected ?string $heading = '';
 
     public Company $company;
 

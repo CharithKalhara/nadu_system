@@ -25,6 +25,8 @@ class DocumentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Sithasi';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Schema $schema): Schema
     {
         return DocumentForm::configure($schema);

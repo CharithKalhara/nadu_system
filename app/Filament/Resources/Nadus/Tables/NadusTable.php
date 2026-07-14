@@ -65,9 +65,12 @@ class NadusTable
                     ->color('success')
                     ->action(function ($record) {
 
-                        $path = app(SithasiService::class)->generate($record);
+                        $document = app(SithasiService::class)->generate($record);
 
-                        return response()->download($path);
+                        return response()->download(
+                            storage_path('app/'.$document->file_path),
+                            $document->file_name,
+                        );
                     }),
             ])
             ->toolbarActions([
