@@ -1,158 +1,76 @@
+<link rel="stylesheet" href="{{ asset('css/company-dashboard.css') }}">
+
 <x-filament-panels::page>
-
-    <div class="space-y-8">
-
-        {{-- Welcome --}}
+    <div class="company-dashboard">
         <x-filament::section>
+            <div class="company-dashboard__heading">
+                <div>
+                    <p class="company-dashboard__eyebrow">Company dashboard</p>
+                    <h1 class="company-dashboard__title">{{ $this->company->company_name }}</h1>
+                </div>
 
-            <h1 class="text-3xl font-bold">
-                {{ session('company_name') }}
-            </h1>
-
-            <p class="mt-2 text-gray-600">
-                Debt Recovery Management System
-            </p>
-
+                <x-filament::button
+                    tag="a"
+                    color="gray"
+                    icon="heroicon-o-building-office-2"
+                    :href="route('filament.admin.resources.companies.index')"
+                >
+                    Switch company
+                </x-filament::button>
+            </div>
         </x-filament::section>
 
-        {{-- Statistics --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <section class="quick-actions" aria-labelledby="quick-actions-heading">
+            <div class="quick-actions__intro">
+                <h2 id="quick-actions-heading">Quick Actions</h2>
+                <p>Manage records and documents for {{ $this->company->company_name }}.</p>
+            </div>
 
-            <x-filament::card>
-                <div class="text-center">
-                    <div class="text-4xl font-bold text-primary-600">
-                        {{ number_format($this->caseCount) }}
-                    </div>
+            <div class="quick-actions__grid">
+                <a href="{{ $this->getNaduRecordsUrl() }}" class="quick-action-card quick-action-card--nadu">
+                    <span class="quick-action-card__decoration" aria-hidden="true"></span>
 
-                    <div class="mt-2 text-gray-500">
-                        Total Cases
-                    </div>
-                </div>
-            </x-filament::card>
+                    <span class="quick-action-card__icon">
+                        <x-filament::icon icon="heroicon-o-folder-open" />
+                    </span>
 
-            <x-filament::card>
-                <div class="text-center">
-                    <div class="text-4xl font-bold text-success-600">
-                        {{ number_format($this->documentCount) }}
-                    </div>
+                    <span class="quick-action-card__content">
+                        <span class="quick-action-card__topline">
+                            <span>
+                                <span class="quick-action-card__title">Nadu Records</span>
+                                <span class="quick-action-card__description">View all Nadu records for this company.</span>
+                            </span>
 
-                    <div class="mt-2 text-gray-500">
-                        Documents
-                    </div>
-                </div>
-            </x-filament::card>
+                            <x-filament::icon icon="heroicon-o-arrow-right" class="quick-action-card__arrow" />
+                        </span>
 
-            <x-filament::card>
-                <div class="text-center">
-                    <div class="text-4xl font-bold text-warning-600">
-                        {{ number_format($this->totalAmount, 2) }}
-                    </div>
+                        <span class="quick-action-card__count">{{ number_format($this->naduCount) }}</span>
+                        <span class="quick-action-card__count-label">Total Nadu records</span>
+                    </span>
+                </a>
 
-                    <div class="mt-2 text-gray-500">
-                        Total Debt
-                    </div>
-                </div>
-            </x-filament::card>
+                <a href="{{ $this->getDocumentsUrl() }}" class="quick-action-card quick-action-card--documents">
+                    <span class="quick-action-card__decoration" aria-hidden="true"></span>
 
-            <x-filament::card>
-                <div class="text-center">
-                    <div class="text-4xl font-bold text-danger-600">
-                        {{ number_format($this->openCases) }}
-                    </div>
+                    <span class="quick-action-card__icon">
+                        <x-filament::icon icon="heroicon-o-document-text" />
+                    </span>
 
-                    <div class="mt-2 text-gray-500">
-                        Open Cases
-                    </div>
-                </div>
-            </x-filament::card>
+                    <span class="quick-action-card__content">
+                        <span class="quick-action-card__topline">
+                            <span>
+                                <span class="quick-action-card__title">Documents</span>
+                                <span class="quick-action-card__description">View all documents for this company.</span>
+                            </span>
 
-        </div>
+                            <x-filament::icon icon="heroicon-o-arrow-right" class="quick-action-card__arrow" />
+                        </span>
 
-        {{-- Main Menu --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-
-            <x-filament::card>
-                <div class="flex flex-col items-center justify-between text-center h-72">
-
-                    <div>
-
-                        <div class="text-7xl">📁</div>
-
-                        <h2 class="mt-4 text-2xl font-bold">
-                            Nadu Cases
-                        </h2>
-
-                        <p class="mt-2 text-gray-500">
-                            View, create, edit and manage all court cases.
-                        </p>
-
-                    </div>
-
-                    <x-filament::button
-                        tag="a"
-                        :href="route('filament.admin.resources.nadus.index')">
-                        Open Cases
-                    </x-filament::button>
-
-                </div>
-            </x-filament::card>
-
-            <x-filament::card>
-                <div class="flex flex-col items-center justify-between text-center h-72">
-
-                    <div>
-
-                        <div class="text-7xl">📄</div>
-
-                        <h2 class="mt-4 text-2xl font-bold">
-                            Documents
-                        </h2>
-
-                        <p class="mt-2 text-gray-500">
-                            Generate and manage legal documents.
-                        </p>
-
-                    </div>
-
-                    <x-filament::button
-                        color="success"
-                        tag="a"
-                        :href="route('filament.admin.resources.documents.index')">
-                        Open Documents
-                    </x-filament::button>
-
-                </div>
-            </x-filament::card>
-
-            <x-filament::card>
-                <div class="flex flex-col items-center justify-between text-center h-72">
-
-                    <div>
-
-                        <div class="text-7xl">🏢</div>
-
-                        <h2 class="mt-4 text-2xl font-bold">
-                            Switch Company
-                        </h2>
-
-                        <p class="mt-2 text-gray-500">
-                            Return to the company list.
-                        </p>
-
-                    </div>
-
-                    <x-filament::button
-                        color="gray"
-                        tag="a"
-                        :href="route('filament.admin.resources.companies.index')">
-                        Companies
-                    </x-filament::button>
-
-                </div>
-            </x-filament::card>
-
-        </div>
-
+                        <span class="quick-action-card__count">{{ number_format($this->documentCount) }}</span>
+                        <span class="quick-action-card__count-label">Total documents</span>
+                    </span>
+                </a>
+            </div>
+        </section>
     </div>
-
 </x-filament-panels::page>

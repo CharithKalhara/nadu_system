@@ -38,19 +38,20 @@ class SithasiService
         }
 
         // Generate unique filename
-        $fileName = 'sithasi_' . $case->id . '_' . now()->format('YmdHis') . '.docx';
-        $filePath = $directory . '/' . $fileName;
+        $fileName = 'sithasi_'.$case->id.'_'.now()->format('YmdHis').'.docx';
+        $filePath = $directory.'/'.$fileName;
 
         // Save Word document
         $template->saveAs($filePath);
 
         // Save document record to database
         Document::create([
-            'nadu_id'       => $case->id,
+            'company_id' => session('company_id'),
+            'nadu_id' => $case->id,
             'document_type' => 'Sithasi',
-            'file_name'     => $fileName,
-            'file_path'     => 'public/summons/' . $fileName,
-            'generated_by'  => Auth::id(),
+            'file_name' => $fileName,
+            'file_path' => 'public/summons/'.$fileName,
+            'generated_by' => Auth::id(),
         ]);
 
         return $filePath;

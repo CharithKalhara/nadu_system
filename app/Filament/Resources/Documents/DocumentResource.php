@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class DocumentResource extends Resource
 {
@@ -37,6 +38,16 @@ class DocumentResource extends Resource
     public static function table(Table $table): Table
     {
         return DocumentsTable::configure($table);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $companyId = session('company_id');
+
+        return $companyId
+            ? $query->where('company_id', $companyId)
+            : $query->whereRaw('1 = 0');
     }
 
     public static function getRelations(): array

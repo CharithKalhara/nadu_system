@@ -1,0 +1,190 @@
+.company-dashboard {
+    display: grid;
+    gap: 2rem;
+}
+
+.company-dashboard__heading {
+    align-items: end;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.company-dashboard__eyebrow,
+.quick-actions__intro p,
+.quick-action-card__description,
+.quick-action-card__count-label {
+    color: #6b7280;
+}
+
+.company-dashboard__eyebrow {
+    font-size: .875rem;
+    font-weight: 600;
+    margin: 0 0 .25rem;
+}
+
+.company-dashboard__title {
+    color: #111827;
+    font-size: 1.875rem;
+    font-weight: 700;
+    letter-spacing: -.025em;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.quick-actions__intro {
+    margin-bottom: 1rem;
+}
+
+.quick-actions__intro h2 {
+    color: #111827;
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.quick-actions__intro p {
+    font-size: .875rem;
+    margin: .25rem 0 0;
+}
+
+.quick-actions__grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.quick-action-card {
+    background: #fff;
+    border: 1px solid rgba(17, 24, 39, .08);
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgba(17, 24, 39, .06);
+    box-sizing: border-box;
+    color: inherit;
+    display: flex;
+    gap: 1.25rem;
+    min-height: 13rem;
+    overflow: hidden;
+    padding: 1.5rem;
+    position: relative;
+    text-decoration: none;
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.quick-action-card:hover {
+    box-shadow: 0 14px 28px rgba(17, 24, 39, .12);
+    transform: translateY(-4px);
+}
+
+.quick-action-card__decoration {
+    border-radius: 999px;
+    height: 9rem;
+    position: absolute;
+    right: -3.75rem;
+    top: -3.75rem;
+    transition: transform .2s ease;
+    width: 9rem;
+}
+
+.quick-action-card:hover .quick-action-card__decoration {
+    transform: scale(1.25);
+}
+
+.quick-action-card__icon {
+    align-items: center;
+    border-radius: .875rem;
+    display: flex;
+    flex: 0 0 auto;
+    height: 3.5rem;
+    justify-content: center;
+    position: relative;
+    width: 3.5rem;
+}
+
+.quick-action-card__icon svg {
+    height: 1.75rem;
+    width: 1.75rem;
+}
+
+.quick-action-card__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    position: relative;
+}
+
+.quick-action-card__topline {
+    align-items: flex-start;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.quick-action-card__title,
+.quick-action-card__description,
+.quick-action-card__count,
+.quick-action-card__count-label {
+    display: block;
+}
+
+.quick-action-card__title {
+    color: #111827;
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.quick-action-card__description {
+    font-size: .875rem;
+    line-height: 1.5;
+    margin-top: .25rem;
+}
+
+.quick-action-card__arrow {
+    color: #9ca3af;
+    flex: 0 0 auto;
+    height: 1.25rem;
+    transition: color .2s ease, transform .2s ease;
+    width: 1.25rem;
+}
+
+.quick-action-card:hover .quick-action-card__arrow {
+    transform: translateX(.25rem);
+}
+
+.quick-action-card__count {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -.025em;
+    line-height: 1;
+    margin-top: auto;
+}
+
+.quick-action-card__count-label {
+    font-size: .875rem;
+    font-weight: 600;
+    margin-top: .5rem;
+}
+
+.quick-action-card--nadu:hover { border-color: rgba(217, 119, 6, .35); }
+.quick-action-card--nadu .quick-action-card__decoration { background: rgba(245, 158, 11, .12); }
+.quick-action-card--nadu .quick-action-card__icon { background: #fffbeb; color: #d97706; }
+.quick-action-card--nadu .quick-action-card__count { color: #d97706; }
+.quick-action-card--nadu:hover .quick-action-card__arrow { color: #d97706; }
+
+.quick-action-card--documents:hover { border-color: rgba(5, 150, 105, .35); }
+.quick-action-card--documents .quick-action-card__decoration { background: rgba(16, 185, 129, .12); }
+.quick-action-card--documents .quick-action-card__icon { background: #ecfdf5; color: #059669; }
+.quick-action-card--documents .quick-action-card__count { color: #059669; }
+.quick-action-card--documents:hover .quick-action-card__arrow { color: #059669; }
+
+@media (max-width: 768px) {
+    .company-dashboard__heading { align-items: flex-start; flex-direction: column; }
+    .quick-actions__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .quick-action-card { gap: 1rem; min-height: 11rem; padding: 1.25rem; }
+    .quick-action-card__icon { height: 3rem; width: 3rem; }
+    .quick-action-card__icon svg { height: 1.5rem; width: 1.5rem; }
+}

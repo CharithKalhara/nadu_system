@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Document extends Model
 {
     protected $fillable = [
+        'company_id',
         'nadu_id',
         'document_type',
         'file_name',

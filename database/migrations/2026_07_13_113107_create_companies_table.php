@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('companies')) {
+            return;
+        }
+
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->string('company_name');
+            $table->string('table_name')->unique();
             $table->timestamps();
         });
     }

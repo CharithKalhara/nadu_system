@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Nadus\Pages;
 
 use App\Filament\Resources\Nadus\NaduResource;
+use App\Models\Company;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -12,11 +13,20 @@ class ListNadus extends ListRecords
 
     public function mount(): void
     {
-        if (! session()->has('company_table')) {
+        $companyId = request()->query('company', session('company_id'));
+
+        if (! $companyId) {
             $this->redirectRoute('filament.admin.resources.companies.index');
 
             return;
         }
+
+        $company = Company::findOrFail($companyId);
+
+        session([
+            'company_id' => $company->id,
+            'company_table' => $company->table_name,
+        ]);
 
         parent::mount();
     }

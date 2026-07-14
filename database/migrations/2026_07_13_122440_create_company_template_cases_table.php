@@ -10,9 +10,14 @@ return new class extends Migration
 
     public function up(): void
     {
+        if (Schema::connection('companies')->hasTable('company_template_cases')) {
+            return;
+        }
+
         Schema::connection('companies')->create('company_template_cases', function (Blueprint $table) {
 
             $table->id();
+            $table->unsignedBigInteger('company_id')->index();
 
             $table->string('nadu_ankaya')->nullable();
 

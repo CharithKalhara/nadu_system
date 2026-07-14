@@ -9,6 +9,7 @@ class CaseTableSchema
     public static function define(Blueprint $table): void
     {
         $table->id();
+        $table->unsignedBigInteger('company_id')->index();
 
         $table->string('nadu_ankaya')->nullable();
 
