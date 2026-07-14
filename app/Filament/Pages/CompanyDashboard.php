@@ -12,7 +12,7 @@ class CompanyDashboard extends Page
     public function mount(): void
     {
         if (! session()->has('company_id')) {
-            redirect()->route('filament.admin.resources.companies.index')->send();
+            $this->redirectRoute('filament.admin.resources.companies.index');
 
             return;
         }
