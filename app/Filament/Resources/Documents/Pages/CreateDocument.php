@@ -13,6 +13,8 @@ class CreateDocument extends CreateRecord
 {
     protected static string $resource = DocumentResource::class;
 
+    protected static string $layout = 'layouts.company-workspace';
+
     protected function handleRecordCreation(array $data): Document
     {
         // Find the selected case

@@ -11,6 +11,8 @@ class EditNadu extends EditRecord
 {
     protected static string $resource = NaduResource::class;
 
+    protected static string $layout = 'layouts.company-workspace';
+
     protected function getHeaderActions(): array
     {
         return [

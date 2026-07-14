@@ -11,6 +11,8 @@ class ListNadus extends ListRecords
 {
     protected static string $resource = NaduResource::class;
 
+    protected static string $layout = 'layouts.company-workspace';
+
     public function mount(): void
     {
         $companyId = request()->query('company', session('company_id'));

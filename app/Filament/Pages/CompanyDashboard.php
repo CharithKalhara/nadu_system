@@ -11,6 +11,8 @@ class CompanyDashboard extends Page
 {
     protected string $view = 'filament.pages.company-dashboard';
 
+    protected static string $layout = 'layouts.company-workspace';
+
     public Company $company;
 
     public int $naduCount = 0;

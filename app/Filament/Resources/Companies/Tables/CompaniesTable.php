@@ -23,7 +23,8 @@ class CompaniesTable
                     ->url(fn ($record) => route(
                         'filament.admin.pages.company-dashboard',
                         ['company' => $record->id]
-                    )),
+                    ))
+                    ->openUrlInNewTab(),
 
                 Tables\Columns\TextColumn::make('table_name')
                     ->label('Table Name')

@@ -9,6 +9,8 @@ class CreateNadu extends CreateRecord
 {
     protected static string $resource = NaduResource::class;
 
+    protected static string $layout = 'layouts.company-workspace';
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['company_id'] = session('company_id');

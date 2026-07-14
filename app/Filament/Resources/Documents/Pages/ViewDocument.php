@@ -10,6 +10,8 @@ class ViewDocument extends ViewRecord
 {
     protected static string $resource = DocumentResource::class;
 
+    protected static string $layout = 'layouts.company-workspace';
+
     protected function getHeaderActions(): array
     {
         return [

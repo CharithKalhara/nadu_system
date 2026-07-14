@@ -8,15 +8,6 @@
                     <p class="company-dashboard__eyebrow">Company dashboard</p>
                     <h1 class="company-dashboard__title">{{ $this->company->company_name }}</h1>
                 </div>
-
-                <x-filament::button
-                    tag="a"
-                    color="gray"
-                    icon="heroicon-o-building-office-2"
-                    :href="route('filament.admin.resources.companies.index')"
-                >
-                    Switch company
-                </x-filament::button>
             </div>
         </x-filament::section>
 
