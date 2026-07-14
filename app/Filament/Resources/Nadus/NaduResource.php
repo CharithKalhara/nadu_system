@@ -24,6 +24,9 @@ class NaduResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'nadu_ankaya';
 
+    // Hide from sidebar
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Schema $schema): Schema
     {
         return NaduForm::configure($schema);
@@ -41,9 +44,7 @@ class NaduResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

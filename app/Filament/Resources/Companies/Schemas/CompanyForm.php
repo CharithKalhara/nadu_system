@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Companies\Schemas;
 
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class CompanyForm
@@ -10,7 +11,10 @@ class CompanyForm
     {
         return $schema
             ->components([
-                //
+                TextInput::make('company_name')
+                    ->label('Company Name')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 }
