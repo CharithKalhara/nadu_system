@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Document;
 use App\Models\Nadu;
+use App\Support\DocumentValueFormatter;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -27,7 +28,7 @@ class SithasiService
 
         $template->setValue(
             'පොලී_ප්රතිශතය',
-            $case->poli_prathishathaya ?? ''
+            DocumentValueFormatter::percentage($case->poli_prathishathaya)
         );
 
         // Create output directory if it doesn't exist

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Nadus\Tables;
 
+use App\Services\BulkSithasiService;
 use App\Services\RecipientDirectoryService;
 use App\Services\SithasiService;
 use Filament\Actions\Action;
@@ -78,6 +79,23 @@ class NadusTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    BulkAction::make('generateSithasiForSelected')
+                        ->label('Generate Sithasi for selected records')
+                        ->icon('heroicon-o-document-duplicate')
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->modalHeading('Generate one Sithasi document')
+                        ->modalDescription('Creates one Word document containing a Sithasi for every selected Nadu record.')
+                        ->action(function (Collection $records) {
+                            $document = app(BulkSithasiService::class)
+                                ->generateForNaduIds($records->modelKeys());
+
+                            return response()->download(
+                                $document['path'],
+                                $document['fileName'],
+                            );
+                        }),
+
                     BulkAction::make('generateRecipientDirectory')
                         ->label('Generate Recipient Directory')
                         ->icon('heroicon-o-document-text')

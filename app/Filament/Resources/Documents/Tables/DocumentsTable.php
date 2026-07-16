@@ -54,7 +54,7 @@ class DocumentsTable
                     ->color('success')
                     ->action(function ($record) {
                         return response()->download(
-                            storage_path('app/' . $record->file_path),
+                            storage_path('app/'.$record->file_path),
                             $record->file_name
                         );
                     }),
