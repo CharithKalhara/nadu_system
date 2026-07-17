@@ -20,6 +20,10 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
+                TextColumn::make('role')
+                    ->badge()
+                    ->color(fn (string $state): string => $state === 'admin' ? 'danger' : 'warning')
+                    ->sortable(),
                 TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),

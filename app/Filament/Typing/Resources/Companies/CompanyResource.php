@@ -3,11 +3,8 @@
 namespace App\Filament\Typing\Resources\Companies;
 
 use App\Filament\Typing\Resources\Companies\Pages\CreateCompany;
-use App\Filament\Typing\Resources\Companies\Pages\EditCompany;
 use App\Filament\Typing\Resources\Companies\Pages\ListCompanies;
-use App\Filament\Typing\Resources\Companies\Pages\ViewCompany;
 use App\Filament\Typing\Resources\Companies\Schemas\CompanyForm;
-use App\Filament\Typing\Resources\Companies\Schemas\CompanyInfolist;
 use App\Filament\Typing\Resources\Companies\Tables\CompaniesTable;
 use App\Models\Company;
 use BackedEnum;
@@ -15,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CompanyResource extends Resource
 {
@@ -29,14 +27,14 @@ class CompanyResource extends Resource
         return CompanyForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return CompanyInfolist::configure($schema);
-    }
-
     public static function table(Table $table): Table
     {
         return CompaniesTable::configure($table);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('status', 'typing');
     }
 
     public static function getRelations(): array
@@ -51,8 +49,6 @@ class CompanyResource extends Resource
         return [
             'index' => ListCompanies::route('/'),
             'create' => CreateCompany::route('/create'),
-            'view' => ViewCompany::route('/{record}'),
-            'edit' => EditCompany::route('/{record}/edit'),
         ];
     }
 }

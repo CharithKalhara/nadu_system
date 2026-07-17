@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Companies\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -15,6 +16,13 @@ class CompanyForm
                     ->label('Company Name')
                     ->required()
                     ->maxLength(255),
+                Select::make('status')
+                    ->options([
+                        'typing' => 'Typing',
+                        'completed' => 'Completed',
+                    ])
+                    ->default('completed')
+                    ->required(),
             ]);
     }
 }

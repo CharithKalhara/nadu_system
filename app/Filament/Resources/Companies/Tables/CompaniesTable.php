@@ -28,6 +28,11 @@ class CompaniesTable
                     ->searchable()
                     ->sortable(),
 
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => $state === 'typing' ? 'warning' : 'success')
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created')
                     ->dateTime('Y-m-d H:i')
