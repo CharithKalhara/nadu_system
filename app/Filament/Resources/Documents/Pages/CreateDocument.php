@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Document;
 use App\Models\Nadu;
 use App\Services\BulkCoverPageService;
+use App\Services\BulkEnvelopeService;
 use App\Services\BulkSithasiService;
 use App\Services\CoverPageService;
 use App\Services\EnvelopeService;
@@ -20,6 +21,7 @@ use App\Services\WibagaDinaya1Service;
 use App\Services\WibagaDinaya2Service;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Js;
 
 class CreateDocument extends CreateRecord
@@ -46,16 +48,32 @@ class CreateDocument extends CreateRecord
             'company_table' => $company->table_name,
         ]);
 
-        if (in_array($data['document_type'], ['sithasi', 'cover_page'], true)) {
+        if ($data['document_type'] === 'sithasi') {
+            $company->update(Arr::only($data, [
+                'nadu_ankaya_format',
+                'teeraka',
+                'karyalaya',
+                'wibhaga_dinaya',
+                'welawa',
+            ]));
+        }
+
+        if (in_array($data['document_type'], ['sithasi', 'cover_page', 'envelope'], true)) {
             $naduIds = $data['scope'] === 'all'
                 ? Nadu::query()->where('company_id', $company->id)->pluck('id')->all()
                 : $data['nadu_ids'];
 
-            $document = $data['document_type'] === 'cover_page'
-                ? app(BulkCoverPageService::class)->createDocumentForNaduIds($naduIds)
-                : app(BulkSithasiService::class)->createDocumentForNaduIds($naduIds);
+            $document = match ($data['document_type']) {
+                'cover_page' => app(BulkCoverPageService::class)->createDocumentForNaduIds($naduIds),
+                'envelope' => app(BulkEnvelopeService::class)->createDocumentForNaduIds($naduIds),
+                default => app(BulkSithasiService::class)->createDocumentForNaduIds($naduIds),
+            };
 
-            $documentName = $data['document_type'] === 'cover_page' ? 'cover page' : 'Sithasi';
+            $documentName = match ($data['document_type']) {
+                'cover_page' => 'cover page',
+                'envelope' => 'envelope',
+                default => 'Sithasi',
+            };
 
             Notification::make()
                 ->title("One {$documentName} Word document was generated for {$document->bulk_record_count} record(s).")

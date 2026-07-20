@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Company;
 use App\Models\Document;
 use App\Models\Nadu;
 use App\Support\DocumentValueFormatter;
+use App\Support\SithasiValueFormatter;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -16,20 +18,9 @@ class SithasiService
             storage_path('app/documents/sithasi.docx')
         );
 
-        $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
-        $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
-        $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');
-        $template->setValue('ඇපකරු_2', $case->aepakaru2_nama ?? '');
-
-        $template->setValue(
-            'ආරවුල්_මුදල',
-            number_format($case->arawul_mudala ?? 0, 2)
-        );
-
-        $template->setValue(
-            'පොලී_ප්රතිශතය',
-            DocumentValueFormatter::percentage($case->poli_prathishathaya)
-        );
+        $template->setValue('sithasi_block', '');
+        $template->setValue('/sithasi_block', '');
+        $this->fillTemplate($template, $case, Company::findOrFail(session('company_id')));
 
         // Create output directory if it doesn't exist
         $directory = storage_path('app/public/summons');
@@ -55,5 +46,26 @@ class SithasiService
             'generated_by' => Auth::id(),
         ]);
 
+    }
+
+    public function fillTemplate(TemplateProcessor $template, Nadu $case, Company $company, string $suffix = ''): void
+    {
+        $date = SithasiValueFormatter::dateParts($company->wibhaga_dinaya);
+
+        $template->setValue('නඩු_අංකය'.$suffix, $case->nadu_ankaya ?? '');
+        $template->setValue('නඩු_අංකය_ format '.$suffix, $company->nadu_ankaya_format ?? '');
+        $template->setValue('සමිතිය'.$suffix, $company->company_name ?? '');
+        $template->setValue('ණයකරු_1'.$suffix, $case->nayakaru1_nama ?? '');
+        $template->setValue('ඇපකරු_1'.$suffix, $case->aepakaru1_nama ?? '');
+        $template->setValue('ඇපකරු_2'.$suffix, $case->aepakaru2_nama ?? '');
+        $template->setValue('තීරක'.$suffix, $company->teeraka ?? '');
+        $template->setValue('කාර්යාලය'.$suffix, $company->karyalaya ?? '');
+        $template->setValue('වර්ෂය'.$suffix, $date['warshaya']);
+        $template->setValue('මාසය'.$suffix, $date['masaya']);
+        $template->setValue('දිනය'.$suffix, $date['dinaya']);
+        $template->setValue('වරුව'.$suffix, SithasiValueFormatter::waruwa($company->welawa));
+        $template->setValue('වෙලාව'.$suffix, SithasiValueFormatter::time($company->welawa));
+        $template->setValue('ආරවුල්_මුදල'.$suffix, number_format((float) ($case->arawul_mudala ?? 0), 2));
+        $template->setValue('පොලී_ප්රතිශතය'.$suffix, DocumentValueFormatter::percentage($case->poli_prathishathaya));
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Company;
 use App\Models\Document;
 use App\Models\Nadu;
-use App\Support\DocumentValueFormatter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\LazyCollection;
 use InvalidArgumentException;
@@ -61,16 +61,10 @@ class BulkSithasiService
 
         $template = new TemplateProcessor($templatePath);
         $template->cloneBlock('sithasi_block', $cases->count(), true, true);
+        $company = Company::findOrFail(session('company_id'));
 
-        $cases->each(function (Nadu $case, int $index) use ($template): void {
-            $number = $index + 1;
-
-            $template->setValue("නඩු_අංකය#{$number}", $case->nadu_ankaya ?? '');
-            $template->setValue("ණයකරු_1#{$number}", $case->nayakaru1_nama ?? '');
-            $template->setValue("ඇපකරු_1#{$number}", $case->aepakaru1_nama ?? '');
-            $template->setValue("ඇපකරු_2#{$number}", $case->aepakaru2_nama ?? '');
-            $template->setValue("ආරවුල්_මුදල#{$number}", number_format((float) ($case->arawul_mudala ?? 0), 2));
-            $template->setValue("පොලී_ප්රතිශතය#{$number}", DocumentValueFormatter::percentage($case->poli_prathishathaya));
+        $cases->each(function (Nadu $case, int $index) use ($template, $company): void {
+            app(SithasiService::class)->fillTemplate($template, $case, $company, '#'.($index + 1));
         });
 
         $directory = storage_path('app/public/summons');
