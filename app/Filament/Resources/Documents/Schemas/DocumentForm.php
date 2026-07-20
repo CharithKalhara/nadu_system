@@ -57,11 +57,6 @@ class DocumentForm
 
                 DatePicker::make('wibhaga_dinaya')
                     ->label('විභාග දිනය')
-                    ->locale('si')
-                    ->extraInputAttributes([
-                        'x-on:focus' => "setTimeout(() => { const months = { Jan: 'ජනවාරි', January: 'ජනවාරි', Feb: 'පෙබරවාරි', February: 'පෙබරවාරි', Mar: 'මාර්තු', March: 'මාර්තු', Apr: 'අප්‍රේල්', April: 'අප්‍රේල්', May: 'මැයි', Jun: 'ජූනි', June: 'ජූනි', Jul: 'ජූලි', July: 'ජූලි', Aug: 'අගෝස්තු', August: 'අගෝස්තු', Sep: 'සැප්තැම්බර්', September: 'සැප්තැම්බර්', Oct: 'ඔක්තෝබර්', October: 'ඔක්තෝබර්', Nov: 'නොවැම්බර්', November: 'නොවැම්බර්', Dec: 'දෙසැම්බර්', December: 'දෙසැම්බර්' }; document.querySelectorAll('.flatpickr-monthDropdown-months option, .flatpickr-current-month .cur-month').forEach((month) => { if (months[month.textContent.trim()]) month.textContent = months[month.textContent.trim()]; }); }, 50)",
-                        'x-on:click' => "setTimeout(() => { const months = { Jan: 'ජනවාරි', January: 'ජනවාරි', Feb: 'පෙබරවාරි', February: 'පෙබරවාරි', Mar: 'මාර්තු', March: 'මාර්තු', Apr: 'අප්‍රේල්', April: 'අප්‍රේල්', May: 'මැයි', Jun: 'ජූනි', June: 'ජූනි', Jul: 'ජූලි', July: 'ජූලි', Aug: 'අගෝස්තු', August: 'අගෝස්තු', Sep: 'සැප්තැම්බර්', September: 'සැප්තැම්බර්', Oct: 'ඔක්තෝබර්', October: 'ඔක්තෝබර්', Nov: 'නොවැම්බර්', November: 'නොවැම්බර්', Dec: 'දෙසැම්බර්', December: 'දෙසැම්බර්' }; document.querySelectorAll('.flatpickr-monthDropdown-months option, .flatpickr-current-month .cur-month').forEach((month) => { if (months[month.textContent.trim()]) month.textContent = months[month.textContent.trim()]; }); }, 50)",
-                    ])
                     ->default(fn (): ?string => self::company()?->wibhaga_dinaya)
                     ->visible(fn (Get $get): bool => $get('document_type') === 'sithasi')
                     ->required(fn (Get $get): bool => $get('document_type') === 'sithasi'),
