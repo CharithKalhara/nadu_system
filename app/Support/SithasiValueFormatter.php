@@ -29,7 +29,7 @@ class SithasiValueFormatter
 
     public static function time(?string $time): string
     {
-        return blank($time) ? '' : Carbon::parse($time)->format('H:i');
+        return blank($time) ? '' : Carbon::parse($time)->format('g:i');
     }
 
     private static function sinhalaMonth(int $month): string

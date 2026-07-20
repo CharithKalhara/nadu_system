@@ -61,12 +61,15 @@ class DocumentForm
                     ->visible(fn (Get $get): bool => $get('document_type') === 'sithasi')
                     ->required(fn (Get $get): bool => $get('document_type') === 'sithasi'),
 
-                TimePicker::make('welawa')
+                TextInput::make('welawa')
                     ->label('වේලාව (24 පැය)')
-                    ->seconds(false)
-                    ->native(false)
-                    ->format('H:i')
-                    ->default(fn (): ?string => self::company()?->welawa)
+                    ->placeholder('HH:MM')
+                    ->rule('date_format:H:i')
+                    ->default(function (): ?string {
+                        $welawa = self::company()?->welawa;
+
+                        return $welawa ? substr($welawa, 0, 5) : null;
+                    })
                     ->visible(fn (Get $get): bool => $get('document_type') === 'sithasi')
                     ->required(fn (Get $get): bool => $get('document_type') === 'sithasi'),
 
