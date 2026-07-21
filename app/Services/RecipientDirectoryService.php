@@ -3,10 +3,14 @@
 namespace App\Services;
 
 use App\Models\Nadu;
+use DOMDocument;
+use DOMElement;
+use DOMXPath;
 use Illuminate\Support\LazyCollection;
 use InvalidArgumentException;
 use PhpOffice\PhpWord\TemplateProcessor;
 use RuntimeException;
+use ZipArchive;
 
 class RecipientDirectoryService
 {
@@ -56,12 +60,77 @@ class RecipientDirectoryService
         $fileName = 'recipient_directory_'.now()->format('YmdHis').'.docx';
         $path = $directory.DIRECTORY_SEPARATOR.$fileName;
         $template->saveAs($path);
+        $this->addRowIndexes($path, count($recipients));
 
         return [
             'path' => $path,
             'fileName' => $fileName,
             'recipientCount' => count($recipients),
         ];
+    }
+
+    /**
+     * Fill the blank first column in the directory table with sequential row numbers.
+     */
+    private function addRowIndexes(string $path, int $recipientCount): void
+    {
+        $document = new ZipArchive;
+
+        if ($document->open($path) !== true) {
+            throw new RuntimeException('Unable to update the generated recipient directory.');
+        }
+
+        try {
+            $xml = $document->getFromName('word/document.xml');
+
+            if ($xml === false) {
+                throw new RuntimeException('The generated recipient directory is missing its document XML.');
+            }
+
+            $dom = new DOMDocument;
+
+            if (! $dom->loadXML($xml)) {
+                throw new RuntimeException('Unable to read the generated recipient directory.');
+            }
+
+            $xpath = new DOMXPath($dom);
+            $xpath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+            $rows = $xpath->query('//w:tbl[1]/w:tr');
+
+            if ($rows === false || $rows->length < $recipientCount) {
+                throw new RuntimeException('The recipient directory table does not contain enough rows.');
+            }
+
+            $firstRecipientRow = $rows->length - $recipientCount;
+
+            for ($index = 0; $index < $recipientCount; $index++) {
+                $row = $rows->item($firstRecipientRow + $index);
+                $firstCell = $row === null ? null : $xpath->query('./w:tc[1]', $row)->item(0);
+
+                if (! $firstCell instanceof DOMElement) {
+                    throw new RuntimeException('The recipient directory table is missing its index column.');
+                }
+
+                $paragraph = $xpath->query('./w:p[1]', $firstCell)->item(0);
+
+                if (! $paragraph instanceof DOMElement) {
+                    $paragraph = $dom->createElementNS($firstCell->namespaceURI, 'w:p');
+                    $firstCell->appendChild($paragraph);
+                }
+
+                $run = $dom->createElementNS($firstCell->namespaceURI, 'w:r');
+                $text = $dom->createElementNS($firstCell->namespaceURI, 'w:t', (string) ($index + 1));
+                $run->appendChild($text);
+                $paragraph->appendChild($run);
+            }
+
+            if (! $document->deleteName('word/document.xml')
+                || ! $document->addFromString('word/document.xml', $dom->saveXML())) {
+                throw new RuntimeException('Unable to save the recipient directory indexes.');
+            }
+        } finally {
+            $document->close();
+        }
     }
 
     /**
@@ -75,6 +144,7 @@ class RecipientDirectoryService
         $this->selectedNadus($naduIds)->each(function (Nadu $nadu) use (&$recipients): void {
             foreach ([
                 [$nadu->nayakaru1_nama, $nadu->nayakaru1_lipinaya1, $nadu->nayakaru1_lipinaya2, $nadu->nayakaru1_lipinaya3],
+                [$nadu->nayakaru2_nama, $nadu->nayakaru2_lipinaya1, $nadu->nayakaru2_lipinaya2, $nadu->nayakaru2_lipinaya3],
                 [$nadu->aepakaru1_nama, $nadu->aepakaru1_lipinaya1, $nadu->aepakaru1_lipinaya2, $nadu->aepakaru1_lipinaya3],
                 [$nadu->aepakaru2_nama, $nadu->aepakaru2_lipinaya1, $nadu->aepakaru2_lipinaya2, $nadu->aepakaru2_lipinaya3],
             ] as [$name, $addressLine1, $addressLine2, $addressLine3]) {
