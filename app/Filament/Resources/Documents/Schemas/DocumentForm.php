@@ -49,6 +49,12 @@ class DocumentForm
                     ->visible(fn (Get $get): bool => $get('document_type') === 'sithasi')
                     ->required(fn (Get $get): bool => $get('document_type') === 'sithasi'),
 
+                TextInput::make('teeraka_name_with_initials')
+                    ->label('තීරක නම (මුලකුරු)')
+                    ->default(fn (): ?string => self::company()?->teeraka_name_with_initials)
+                    ->visible(fn (Get $get): bool => $get('document_type') === 'thinduwa_yawima')
+                    ->required(fn (Get $get): bool => $get('document_type') === 'thinduwa_yawima'),
+
                 TextInput::make('karyalaya')
                     ->label('කාර්යාලය')
                     ->default(fn (): ?string => self::company()?->karyalaya)
@@ -81,23 +87,23 @@ class DocumentForm
                     ])
                     ->default('all')
                     ->live()
-                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope'], true))
-                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope'], true)),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima'], true)),
 
                 Select::make('nadu_ids')
                     ->label('Select Records')
                     ->options(fn (): array => self::getNaduOptions())
                     ->multiple()
                     ->searchable()
-                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope'], true) && $get('scope') === 'selected')
-                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope'], true) && $get('scope') === 'selected'),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima'], true) && $get('scope') === 'selected')
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima'], true) && $get('scope') === 'selected'),
 
                 Select::make('nadu_id')
                     ->label('Nadu Number')
                     ->options(fn (): array => self::getNaduOptions())
                     ->searchable()
-                    ->visible(fn (Get $get): bool => ! in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope'], true))
-                    ->required(fn (Get $get): bool => ! in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope'], true)),
+                    ->visible(fn (Get $get): bool => ! in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima'], true))
+                    ->required(fn (Get $get): bool => ! in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima'], true)),
             ]);
     }
 

@@ -12,6 +12,7 @@ class Company extends Model
         'status',
         'nadu_ankaya_format',
         'teeraka',
+        'teeraka_name_with_initials',
         'karyalaya',
         'wibhaga_dinaya',
         'welawa',

@@ -9,6 +9,7 @@ use App\Models\Nadu;
 use App\Services\BulkCoverPageService;
 use App\Services\BulkEnvelopeService;
 use App\Services\BulkSithasiService;
+use App\Services\BulkThinduwaYawimaService;
 use App\Services\CoverPageService;
 use App\Services\EnvelopeService;
 use App\Services\HethupataService;
@@ -58,7 +59,11 @@ class CreateDocument extends CreateRecord
             ]));
         }
 
-        if (in_array($data['document_type'], ['sithasi', 'cover_page', 'envelope'], true)) {
+        if ($data['document_type'] === 'thinduwa_yawima') {
+            $company->update(Arr::only($data, ['teeraka_name_with_initials']));
+        }
+
+        if (in_array($data['document_type'], ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima'], true)) {
             $naduIds = $data['scope'] === 'all'
                 ? Nadu::query()->where('company_id', $company->id)->pluck('id')->all()
                 : $data['nadu_ids'];
@@ -66,12 +71,14 @@ class CreateDocument extends CreateRecord
             $document = match ($data['document_type']) {
                 'cover_page' => app(BulkCoverPageService::class)->createDocumentForNaduIds($naduIds),
                 'envelope' => app(BulkEnvelopeService::class)->createDocumentForNaduIds($naduIds),
+                'thinduwa_yawima' => app(BulkThinduwaYawimaService::class)->createDocumentForNaduIds($naduIds),
                 default => app(BulkSithasiService::class)->createDocumentForNaduIds($naduIds),
             };
 
             $documentName = match ($data['document_type']) {
                 'cover_page' => 'cover page',
                 'envelope' => 'envelope',
+                'thinduwa_yawima' => 'Thinduwa Yawima',
                 default => 'Sithasi',
             };
 
