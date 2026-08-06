@@ -16,6 +16,8 @@ class WibagaDinaya1Service
         $template = new TemplateProcessor(storage_path('app/documents/1_wibaga_dinaya.docx'));
         $company = Company::find(session('company_id'));
 
+        $template->setValue('1_wibaga_dinaya_block', '');
+        $template->setValue('/1_wibaga_dinaya_block', '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');

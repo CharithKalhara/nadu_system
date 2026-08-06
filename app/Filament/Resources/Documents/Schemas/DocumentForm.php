@@ -176,23 +176,23 @@ class DocumentForm
                     ])
                     ->default('all')
                     ->live()
-                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true))
-                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true)),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true)),
 
                 Select::make('nadu_ids')
                     ->label('Select Records')
                     ->options(fn (): array => self::getNaduOptions())
                     ->multiple()
                     ->searchable()
-                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true) && $get('scope') === 'selected')
-                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true) && $get('scope') === 'selected'),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true) && $get('scope') === 'selected')
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true) && $get('scope') === 'selected'),
 
                 Select::make('nadu_id')
                     ->label('Nadu Number')
                     ->options(fn (): array => self::getNaduOptions())
                     ->searchable()
-                    ->visible(fn (Get $get): bool => ! in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true))
-                    ->required(fn (Get $get): bool => ! in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true)),
+                    ->visible(fn (Get $get): bool => ! in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true))
+                    ->required(fn (Get $get): bool => ! in_array($get('document_type'), ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true)),
             ]);
     }
 

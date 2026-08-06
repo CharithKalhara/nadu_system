@@ -1,0 +1,4 @@
+<?php
+namespace App\Services;
+use App\Models\Nadu; use PhpOffice\PhpWord\TemplateProcessor;
+class BulkWibagaDinaya2Service extends BulkThinduwaWrittenService { protected function templatePath(): string{return storage_path('app/documents/2_wibaga_dinaya.docx');} protected function outputDirectoryName(): string{return 'wibaga-dinaya-2';} protected function filePrefix(): string{return 'wibaga_dinaya_2';} protected function documentType(): string{return 'Bulk 2 Wibaga Dinaya';} protected function fillTemplate(TemplateProcessor $t,Nadu $c,array $v=[]):void{foreach(['2_wibaga_dinaya_block'=>'','/2_wibaga_dinaya_block'=>'',' නඩු_අංකය'=>$c->nadu_ankaya,'ණයකරු_1'=>$c->nayakaru1_nama,'ණයකරු_2'=>$c->nayakaru2_nama,'ඇපකරු_1'=>$c->aepakaru1_nama,'ඇපකරු_2'=>$c->aepakaru2_nama] as $k=>$x)$t->setValue($k,$x??'');}}

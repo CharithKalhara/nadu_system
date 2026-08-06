@@ -8,12 +8,16 @@ use App\Models\Document;
 use App\Models\Nadu;
 use App\Services\BulkCoverPageService;
 use App\Services\BulkEnvelopeService;
+use App\Services\BulkHethupataService;
 use App\Services\BulkMudrithaPradanayaService;
 use App\Services\BulkMudrithaPradanayaSecondPageService;
+use App\Services\BulkMulKola2Service;
 use App\Services\BulkSithasiService;
 use App\Services\BulkThirakawaraJournalService;
 use App\Services\BulkThinduwaWrittenService;
 use App\Services\BulkThinduwaYawimaService;
+use App\Services\BulkWibagaDinaya1Service;
+use App\Services\BulkWibagaDinaya2Service;
 use App\Services\CoverPageService;
 use App\Services\EnvelopeService;
 use App\Services\HethupataService;
@@ -80,6 +84,7 @@ class CreateDocument extends CreateRecord
             ]));
         }
 
+<<<<<<< HEAD
         if (in_array($data['document_type'], ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true)) {
             $company->update(Arr::only($data, [
                 'first_sithasiya_date',
@@ -90,6 +95,9 @@ class CreateDocument extends CreateRecord
         }
 
         if (in_array($data['document_type'], ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true)) {
+=======
+        if (in_array($data['document_type'], ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true)) {
+>>>>>>> b718614873f1fb8e0a084de75f3e9093e8b3c014
             $naduIds = $data['scope'] === 'all'
                 ? Nadu::query()->where('company_id', $company->id)->pluck('id')->all()
                 : $data['nadu_ids'];
@@ -97,22 +105,30 @@ class CreateDocument extends CreateRecord
             $document = match ($data['document_type']) {
                 'cover_page' => app(BulkCoverPageService::class)->createDocumentForNaduIds($naduIds),
                 'envelope' => app(BulkEnvelopeService::class)->createDocumentForNaduIds($naduIds),
+                'hethupata' => app(BulkHethupataService::class)->createDocumentForNaduIds($naduIds),
                 'mudritha_pradanaya' => app(BulkMudrithaPradanayaService::class)->createDocumentForNaduIds($naduIds),
                 'mudritha_pradanaya_second_page' => app(BulkMudrithaPradanayaSecondPageService::class)->createDocumentForNaduIds($naduIds),
+                'mul_kola_2' => app(BulkMulKola2Service::class)->createDocumentForNaduIds($naduIds),
                 'thirakawara_journal' => app(BulkThirakawaraJournalService::class)->createDocumentForNaduIds($naduIds, $data),
                 'thinduwa_written' => app(BulkThinduwaWrittenService::class)->createDocumentForNaduIds($naduIds),
                 'thinduwa_yawima' => app(BulkThinduwaYawimaService::class)->createDocumentForNaduIds($naduIds),
+                'wibaga_dinaya_1' => app(BulkWibagaDinaya1Service::class)->createDocumentForNaduIds($naduIds),
+                'wibaga_dinaya_2' => app(BulkWibagaDinaya2Service::class)->createDocumentForNaduIds($naduIds),
                 default => app(BulkSithasiService::class)->createDocumentForNaduIds($naduIds),
             };
 
             $documentName = match ($data['document_type']) {
                 'cover_page' => 'cover page',
                 'envelope' => 'envelope',
+                'hethupata' => 'Hethupata',
                 'mudritha_pradanaya' => 'මුද්‍රිත ප්‍රදානය',
                 'mudritha_pradanaya_second_page' => 'මුද්‍රිත ප්‍රදානය (දෙවන පිට)',
+                'mul_kola_2' => 'Mul Kola 2',
                 'thirakawara_journal' => 'තීරකවරයාගේ ජර්නලය',
                 'thinduwa_written' => 'Thinduwa Written',
                 'thinduwa_yawima' => 'Thinduwa Yawima',
+                'wibaga_dinaya_1' => '1 Wibaga Dinaya',
+                'wibaga_dinaya_2' => '2 Wibaga Dinaya',
                 default => 'Sithasi',
             };
 
