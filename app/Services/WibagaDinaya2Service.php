@@ -13,6 +13,9 @@ class WibagaDinaya2Service
     {
         $template = new TemplateProcessor(storage_path('app/documents/2_wibaga_dinaya.docx'));
 
+        $template->setValue('2_wibaga_dinaya_block', '');
+        $template->setValue('/2_wibaga_dinaya_block', '');
+        $template->setValue(' නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');

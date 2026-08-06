@@ -14,6 +14,8 @@ class MulKola2Service
     {
         $template = new TemplateProcessor(storage_path('app/documents/mul_kola_2.docx'));
 
+        $template->setValue('first_pages_block', '');
+        $template->setValue('/first_pages_block', '');
         $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_1__ලිපිනය_1', $case->nayakaru1_lipinaya1 ?? '');
