@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Document;
+use App\Models\Company;
 use App\Models\Nadu;
 use App\Support\DocumentValueFormatter;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +38,12 @@ class ThinduwaWrittenService
 
     public function fillTemplate(TemplateProcessor $template, Nadu $case): void
     {
+        $company = Company::find(session('company_id'));
         $template->setValue('thinduwa_written_block', '');
         $template->setValue('/thinduwa_written_block', '');
+        $template->setValue('නඩු_අංකය_ format ', $company?->nadu_ankaya_format ?? '');
+        $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
+        $template->setValue('සමිතිය', $company?->company_name ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');
