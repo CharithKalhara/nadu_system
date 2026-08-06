@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Document;
+use App\Models\Company;
 use App\Models\Nadu;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -12,11 +14,15 @@ class WibagaDinaya2Service
     public function generate(Nadu $case): Document
     {
         $template = new TemplateProcessor(storage_path('app/documents/2_wibaga_dinaya.docx'));
+        $company = Company::find(session('company_id'));
 
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');
         $template->setValue('ඇපකරු_2', $case->aepakaru2_nama ?? '');
+        $template->setValue('2_විභාග_දිනය', $this->formatDate($company?->second_sithasiya_date));
+        $template->setValue('ස්ථානය', $company?->wibaga_sthanaya ?? '');
+        $template->setValue('නියෝජිතයා', $company?->niyojithaya ?? '');
 
         $directory = storage_path('app/public/wibaga-dinaya-2');
 
@@ -35,5 +41,10 @@ class WibagaDinaya2Service
             'file_path' => 'public/wibaga-dinaya-2/'.$fileName,
             'generated_by' => Auth::id(),
         ]);
+    }
+
+    private function formatDate(?string $date): string
+    {
+        return $date ? Carbon::parse($date)->format('Y/m/d') : '';
     }
 }

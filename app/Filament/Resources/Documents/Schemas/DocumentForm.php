@@ -132,6 +132,30 @@ class DocumentForm
                     ->visible(fn (Get $get): bool => $get('document_type') === 'sithasi')
                     ->required(fn (Get $get): bool => $get('document_type') === 'sithasi'),
 
+                DatePicker::make('first_sithasiya_date')
+                    ->label('1 විභාග දිනය')
+                    ->default(fn (): ?string => self::company()?->first_sithasiya_date)
+                    ->visible(fn (Get $get): bool => $get('document_type') === 'wibaga_dinaya_1')
+                    ->required(fn (Get $get): bool => $get('document_type') === 'wibaga_dinaya_1'),
+
+                TextInput::make('wibaga_sthanaya')
+                    ->label('ස්ථානය')
+                    ->default(fn (): ?string => self::company()?->wibaga_sthanaya)
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true)),
+
+                TextInput::make('niyojithaya')
+                    ->label('නියෝජිතයා')
+                    ->default(fn (): ?string => self::company()?->niyojithaya)
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true)),
+
+                DatePicker::make('second_sithasiya_date')
+                    ->label('2 විභාග දිනය')
+                    ->default(fn (): ?string => self::company()?->second_sithasiya_date)
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true)),
+
                 TextInput::make('welawa')
                     ->label('වේලාව (24 පැය)')
                     ->placeholder('HH:MM')

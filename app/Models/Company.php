@@ -27,5 +27,6 @@ class Company extends Model
         'second_sithasiya_date',
         'second_sithasiya_post_office',
         'second_sithasiya_receipt_no',
+        'wibaga_sthanaya',
     ];
 }

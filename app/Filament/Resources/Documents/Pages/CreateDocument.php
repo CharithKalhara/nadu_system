@@ -80,6 +80,15 @@ class CreateDocument extends CreateRecord
             ]));
         }
 
+        if (in_array($data['document_type'], ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true)) {
+            $company->update(Arr::only($data, [
+                'first_sithasiya_date',
+                'second_sithasiya_date',
+                'wibaga_sthanaya',
+                'niyojithaya',
+            ]));
+        }
+
         if (in_array($data['document_type'], ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true)) {
             $naduIds = $data['scope'] === 'all'
                 ? Nadu::query()->where('company_id', $company->id)->pluck('id')->all()
