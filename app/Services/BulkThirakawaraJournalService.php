@@ -27,8 +27,8 @@ class BulkThirakawaraJournalService extends BulkThinduwaWrittenService
         return 'Bulk තීරකවරයාගේ ජර්නලය';
     }
 
-    protected function fillTemplate(TemplateProcessor $template, Nadu $case): void
+    protected function fillTemplate(TemplateProcessor $template, Nadu $case, array $templateValues = []): void
     {
-        app(ThirakawaraJournalService::class)->fillTemplate($template, $case);
+        app(ThirakawaraJournalService::class)->fillTemplate($template, $case, $templateValues);
     }
 }

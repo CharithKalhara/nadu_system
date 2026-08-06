@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Document;
+use App\Models\Company;
 use App\Models\Nadu;
 use App\Support\DocumentValueFormatter;
 use Illuminate\Support\Facades\Auth;
@@ -10,10 +11,10 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class ThirakawaraJournalService
 {
-    public function generate(Nadu $case): Document
+    public function generate(Nadu $case, array $templateValues = []): Document
     {
         $template = new TemplateProcessor($this->templatePath());
-        $this->fillTemplate($template, $case);
+        $this->fillTemplate($template, $case, $templateValues);
 
         $directory = storage_path('app/public/thirakawara-journal');
         if (! is_dir($directory)) {
@@ -38,12 +39,23 @@ class ThirakawaraJournalService
         return storage_path('app/documents/තීරකවරයාගේ ජර්නලය.docx');
     }
 
-    public function fillTemplate(TemplateProcessor $template, Nadu $case): void
+    public function fillTemplate(TemplateProcessor $template, Nadu $case, array $templateValues = []): void
     {
+        $company = Company::find(session('company_id'));
         $values = [
             'thirakawara_journal_block' => '',
             '/thirakawara_journal_block' => '',
+            'නඩු_අංකය_ format' => $templateValues['journal_nadu_ankaya_format'] ?? $company?->journal_nadu_ankaya_format ?? $company?->nadu_ankaya_format ?? '',
             'නඩු_අංකය' => $case->nadu_ankaya ?? '',
+            'තීරක' => $templateValues['journal_teeraka'] ?? $company?->journal_teeraka ?? $company?->teeraka_name_with_initials ?? $company?->teeraka ?? '',
+            'සමිතිය' => $templateValues['journal_samithiya'] ?? $company?->journal_samithiya ?? $company?->company_name ?? '',
+            'සමිතිය_ලිපිනය' => $templateValues['journal_samithiya_lipinaya'] ?? $company?->journal_samithiya_lipinaya ?? '',
+            'නියෝජිතයා' => $templateValues['journal_niyojithaya'] ?? $company?->journal_niyojithaya ?? '',
+            'නියෝජිතයා_ලිපිනය_1' => $templateValues['journal_niyojithaya_lipinaya_1'] ?? $company?->journal_niyojithaya_lipinaya_1 ?? '',
+            ' නියෝජිතයා_ලිපිනය_1' => $templateValues['journal_niyojithaya_lipinaya_1'] ?? $company?->journal_niyojithaya_lipinaya_1 ?? '',
+            ' නියෝජිතයා_ලිපිනය_2' => $templateValues['journal_niyojithaya_lipinaya_2'] ?? $company?->journal_niyojithaya_lipinaya_2 ?? '',
+            'නියෝජිතයා_ලිපිනය_3' => $templateValues['journal_niyojithaya_lipinaya_3'] ?? $company?->journal_niyojithaya_lipinaya_3 ?? '',
+            ' නියෝජිතයා_ලිපිනය_3' => $templateValues['journal_niyojithaya_lipinaya_3'] ?? $company?->journal_niyojithaya_lipinaya_3 ?? '',
             'ණයකරු_1' => $case->nayakaru1_nama ?? '',
             'ණයකරු_1__ලිපිනය_1' => $case->nayakaru1_lipinaya1 ?? '',
             'ණයකරු_1__ලිපිනය_2' => $case->nayakaru1_lipinaya2 ?? '',
@@ -60,6 +72,12 @@ class ThirakawaraJournalService
             'ඇපකරු_2__ලිපිනය_3' => $case->aepakaru2_lipinaya3 ?? '',
             'මුල්_මුදල' => number_format((float) ($case->mul_mudala ?? 0), 2),
             'පොලී_ප්රතිශතය' => DocumentValueFormatter::percentage($case->poli_prathishathaya),
+            ' පළමු_සිතාසිය_දිනය' => $templateValues['journal_first_sithasiya_date'] ?? $company?->journal_first_sithasiya_date ?? '',
+            'පළමු_සිතාසිය_post_office' => $templateValues['journal_first_sithasiya_post_office'] ?? $company?->journal_first_sithasiya_post_office ?? '',
+            ' පළමු_සිතාසිය_කුවි_අං' => $templateValues['journal_first_sithasiya_receipt_no'] ?? $company?->journal_first_sithasiya_receipt_no ?? '',
+            'දෙවන_සිතාසිය_දිනය' => $templateValues['journal_second_sithasiya_date'] ?? $company?->journal_second_sithasiya_date ?? '',
+            ' දෙවන_සිතාසිය_post_office' => $templateValues['journal_second_sithasiya_post_office'] ?? $company?->journal_second_sithasiya_post_office ?? '',
+            'දෙවන_සිතාසිය_කුවි_අං' => $templateValues['journal_second_sithasiya_receipt_no'] ?? $company?->journal_second_sithasiya_receipt_no ?? '',
             'පොලිය' => number_format((float) ($case->poliya ?? 0), 2),
             'නඩු_ගාස්තු' => number_format((float) ($case->nadu_gasthu ?? 0), 2),
             'ආරවුල්_මුදල' => number_format((float) ($case->arawul_mudala ?? 0), 2),

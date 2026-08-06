@@ -70,6 +70,16 @@ class CreateDocument extends CreateRecord
             $company->update(Arr::only($data, ['teeraka_name_with_initials']));
         }
 
+        if ($data['document_type'] === 'thirakawara_journal') {
+            $company->update(Arr::only($data, [
+                'journal_nadu_ankaya_format', 'journal_teeraka', 'journal_samithiya', 'journal_samithiya_lipinaya',
+                'journal_niyojithaya', 'journal_niyojithaya_lipinaya_1', 'journal_niyojithaya_lipinaya_2',
+                'journal_niyojithaya_lipinaya_3', 'journal_first_sithasiya_date', 'journal_first_sithasiya_post_office',
+                'journal_first_sithasiya_receipt_no', 'journal_second_sithasiya_date',
+                'journal_second_sithasiya_post_office', 'journal_second_sithasiya_receipt_no',
+            ]));
+        }
+
         if (in_array($data['document_type'], ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page'], true)) {
             $naduIds = $data['scope'] === 'all'
                 ? Nadu::query()->where('company_id', $company->id)->pluck('id')->all()
@@ -80,7 +90,7 @@ class CreateDocument extends CreateRecord
                 'envelope' => app(BulkEnvelopeService::class)->createDocumentForNaduIds($naduIds),
                 'mudritha_pradanaya' => app(BulkMudrithaPradanayaService::class)->createDocumentForNaduIds($naduIds),
                 'mudritha_pradanaya_second_page' => app(BulkMudrithaPradanayaSecondPageService::class)->createDocumentForNaduIds($naduIds),
-                'thirakawara_journal' => app(BulkThirakawaraJournalService::class)->createDocumentForNaduIds($naduIds),
+                'thirakawara_journal' => app(BulkThirakawaraJournalService::class)->createDocumentForNaduIds($naduIds, $data),
                 'thinduwa_written' => app(BulkThinduwaWrittenService::class)->createDocumentForNaduIds($naduIds),
                 'thinduwa_yawima' => app(BulkThinduwaYawimaService::class)->createDocumentForNaduIds($naduIds),
                 default => app(BulkSithasiService::class)->createDocumentForNaduIds($naduIds),
@@ -115,7 +125,7 @@ class CreateDocument extends CreateRecord
             'cover_page' => app(CoverPageService::class)->generate($case),
             'thinduwa_yawima' => app(ThinduwaYawimaService::class)->generate($case),
             'thinduwa_written' => app(ThinduwaWrittenService::class)->generate($case),
-            'thirakawara_journal' => app(ThirakawaraJournalService::class)->generate($case),
+            'thirakawara_journal' => app(ThirakawaraJournalService::class)->generate($case, $data),
             'mudritha_pradanaya' => app(MudrithaPradanayaService::class)->generate($case),
             'mudritha_pradanaya_second_page' => app(MudrithaPradanayaSecondPageService::class)->generate($case),
             'wibaga_dinaya_1' => app(WibagaDinaya1Service::class)->generate($case),

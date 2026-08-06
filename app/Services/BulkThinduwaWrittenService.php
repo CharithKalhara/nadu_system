@@ -13,7 +13,7 @@ use ZipArchive;
 
 class BulkThinduwaWrittenService
 {
-    public function createDocumentForNaduIds(array $naduIds): Document
+    public function createDocumentForNaduIds(array $naduIds, array $templateValues = []): Document
     {
         $naduIds = array_values(array_unique(array_filter($naduIds)));
 
@@ -36,7 +36,7 @@ class BulkThinduwaWrittenService
         $temporaryFiles = [];
 
         try {
-            $documentXml = $cases->map(function (Nadu $case) use ($templatePath, &$temporaryFiles): string {
+            $documentXml = $cases->map(function (Nadu $case) use ($templatePath, $templateValues, &$temporaryFiles): string {
                 $temporaryPath = tempnam(sys_get_temp_dir(), 'bulk-thinduwa-written-');
 
                 if ($temporaryPath === false) {
@@ -45,7 +45,7 @@ class BulkThinduwaWrittenService
 
                 $temporaryFiles[] = $temporaryPath;
                 $template = new TemplateProcessor($templatePath);
-                $this->fillTemplate($template, $case);
+                $this->fillTemplate($template, $case, $templateValues);
                 $template->saveAs($temporaryPath);
 
                 return $this->readDocumentXml($temporaryPath);
@@ -106,7 +106,7 @@ class BulkThinduwaWrittenService
         return 'Bulk Thinduwa Written';
     }
 
-    protected function fillTemplate(TemplateProcessor $template, Nadu $case): void
+    protected function fillTemplate(TemplateProcessor $template, Nadu $case, array $templateValues = []): void
     {
         app(ThinduwaWrittenService::class)->fillTemplate($template, $case);
     }

@@ -27,7 +27,7 @@ class BulkMudrithaPradanayaSecondPageService extends BulkThinduwaWrittenService
         return 'Bulk මුද්‍රිත ප්‍රදානය (දෙවන පිට)';
     }
 
-    protected function fillTemplate(TemplateProcessor $template, Nadu $case): void
+    protected function fillTemplate(TemplateProcessor $template, Nadu $case, array $templateValues = []): void
     {
         app(MudrithaPradanayaSecondPageService::class)->fillTemplate($template, $case);
     }
