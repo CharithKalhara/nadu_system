@@ -22,6 +22,7 @@ class MulKola2Service
         $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('සමිතිය', $company?->company_name ?? '');
         $template->setValue('සමිතිය_ලිපිනය', $templateValues['samithiya_lipinaya'] ?? $company?->samithiya_lipinaya ?? '');
+        $template->setValue('තීරක', $company?->teeraka ?? '');
         $template->setValue('නියෝජිතයා', $templateValues['niyojithaya'] ?? $company?->niyojithaya ?? '');
         $template->setValue('නියෝජිතයා_ලිපිනය_1', $templateValues['niyojithaya_lipinaya_1'] ?? $company?->niyojithaya_lipinaya_1 ?? '');
         // The supplied template has a leading space in these two placeholder names.

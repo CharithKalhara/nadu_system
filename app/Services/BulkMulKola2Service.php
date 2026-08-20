@@ -40,6 +40,7 @@ class BulkMulKola2Service extends BulkThinduwaWrittenService
             'නඩු_අංකය' => $case->nadu_ankaya,
             'සමිතිය' => $company?->company_name,
             'සමිතිය_ලිපිනය' => $templateValues['samithiya_lipinaya'] ?? $company?->samithiya_lipinaya,
+            'තීරක' => $company?->teeraka,
             'නියෝජිතයා' => $templateValues['niyojithaya'] ?? $company?->niyojithaya,
             'නියෝජිතයා_ලිපිනය_1' => $templateValues['niyojithaya_lipinaya_1'] ?? $company?->niyojithaya_lipinaya_1,
             // The supplied template has a leading space in these two placeholder names.
