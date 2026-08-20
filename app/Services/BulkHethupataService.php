@@ -36,6 +36,7 @@ class BulkHethupataService extends BulkThinduwaWrittenService
         foreach ([
             'hethupata_block' => '',
             '/hethupata_block' => '',
+            'සමිතිය' => $company?->company_name,
             'නඩු_අංකය_ format ' => $company?->nadu_ankaya_format,
             'නඩු_අංකය' => $case->nadu_ankaya,
             'ණයකරු_1' => $case->nayakaru1_nama,

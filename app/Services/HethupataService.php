@@ -18,6 +18,7 @@ class HethupataService
         $company = Company::find(session('company_id'));
         $template->setValue('hethupata_block', '');
         $template->setValue('/hethupata_block', '');
+        $template->setValue('සමිතිය', $company?->company_name ?? '');
         $template->setValue('නඩු_අංකය_ format ', $company?->nadu_ankaya_format ?? '');
         $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
