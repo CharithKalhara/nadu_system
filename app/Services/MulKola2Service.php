@@ -29,21 +29,29 @@ class MulKola2Service
         $template->setValue(' නියෝජිතයා_ලිපිනය_2', $templateValues['niyojithaya_lipinaya_2'] ?? $company?->niyojithaya_lipinaya_2 ?? '');
         $template->setValue(' නියෝජිතයා_ලිපිනය_3', $templateValues['niyojithaya_lipinaya_3'] ?? $company?->niyojithaya_lipinaya_3 ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
-        $template->setValue('ණයකරු_1__ලිපිනය_1', $case->nayakaru1_lipinaya1 ?? '');
-        $template->setValue('ණයකරු_1__ලිපිනය_2', $case->nayakaru1_lipinaya2 ?? '');
-        $template->setValue('ණයකරු_1__ලිපිනය_3', $case->nayakaru1_lipinaya3 ?? '');
+        $template->setValue('ණයකරු_1_ලිපිනය', $this->combineAddress([
+            $case->nayakaru1_lipinaya1,
+            $case->nayakaru1_lipinaya2,
+            $case->nayakaru1_lipinaya3,
+        ]));
         $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
-        $template->setValue('ණයකරු_2__ලිපිනය_1', $case->nayakaru2_lipinaya1 ?? '');
-        $template->setValue('ණයකරු_2__ලිපිනය_2', $case->nayakaru2_lipinaya2 ?? '');
-        $template->setValue('ණයකරු_2__ලිපිනය_3', $case->nayakaru2_lipinaya3 ?? '');
+        $template->setValue('ණයකරු_2_ලිපිනය', $this->combineAddress([
+            $case->nayakaru2_lipinaya1,
+            $case->nayakaru2_lipinaya2,
+            $case->nayakaru2_lipinaya3,
+        ]));
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');
-        $template->setValue('ඇපකරු_1__ලිපිනය_1', $case->aepakaru1_lipinaya1 ?? '');
-        $template->setValue('ඇපකරු_1__ලිපිනය_2', $case->aepakaru1_lipinaya2 ?? '');
-        $template->setValue('ඇපකරු_1__ලිපිනය_3', $case->aepakaru1_lipinaya3 ?? '');
+        $template->setValue('ඇපකරු_1_ලිපිනය', $this->combineAddress([
+            $case->aepakaru1_lipinaya1,
+            $case->aepakaru1_lipinaya2,
+            $case->aepakaru1_lipinaya3,
+        ]));
         $template->setValue('ඇපකරු_2_', $case->aepakaru2_nama ?? '');
-        $template->setValue('ඇපකරු_2__ලිපිනය_1', $case->aepakaru2_lipinaya1 ?? '');
-        $template->setValue('ඇපකරු_2__ලිපිනය_2', $case->aepakaru2_lipinaya2 ?? '');
-        $template->setValue('ඇපකරු_2__ලිපිනය_3', $case->aepakaru2_lipinaya3 ?? '');
+        $template->setValue('ඇපකරු_2_ලිපිනය', $this->combineAddress([
+            $case->aepakaru2_lipinaya1,
+            $case->aepakaru2_lipinaya2,
+            $case->aepakaru2_lipinaya3,
+        ]));
         $template->setValue('ආරවුල්_මුදල', number_format((float) ($case->arawul_mudala ?? 0), 2));
         $template->setValue('පොලී_ප්රතිශතය', DocumentValueFormatter::percentage($case->poli_prathishathaya));
 
@@ -64,5 +72,13 @@ class MulKola2Service
             'file_path' => 'public/mul-kola-2/'.$fileName,
             'generated_by' => Auth::id(),
         ]);
+    }
+
+    /** @param array<int, string|null> $addressLines */
+    private function combineAddress(array $addressLines): string
+    {
+        return collect($addressLines)
+            ->filter(fn (?string $addressLine): bool => filled($addressLine))
+            ->implode(', ');
     }
 }

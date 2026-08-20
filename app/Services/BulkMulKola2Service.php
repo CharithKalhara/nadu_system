@@ -47,25 +47,25 @@ class BulkMulKola2Service extends BulkThinduwaWrittenService
             ' නියෝජිතයා_ලිපිනය_2' => $templateValues['niyojithaya_lipinaya_2'] ?? $company?->niyojithaya_lipinaya_2,
             ' නියෝජිතයා_ලිපිනය_3' => $templateValues['niyojithaya_lipinaya_3'] ?? $company?->niyojithaya_lipinaya_3,
             'ණයකරු_1' => $case->nayakaru1_nama,
-            'ණයකරු_1__ලිපිනය_1' => $case->nayakaru1_lipinaya1,
-            'ණයකරු_1__ලිපිනය_2' => $case->nayakaru1_lipinaya2,
-            'ණයකරු_1__ලිපිනය_3' => $case->nayakaru1_lipinaya3,
+            'ණයකරු_1_ලිපිනය' => $this->combineAddress([$case->nayakaru1_lipinaya1, $case->nayakaru1_lipinaya2, $case->nayakaru1_lipinaya3]),
             'ණයකරු_2' => $case->nayakaru2_nama,
-            'ණයකරු_2__ලිපිනය_1' => $case->nayakaru2_lipinaya1,
-            'ණයකරු_2__ලිපිනය_2' => $case->nayakaru2_lipinaya2,
-            'ණයකරු_2__ලිපිනය_3' => $case->nayakaru2_lipinaya3,
+            'ණයකරු_2_ලිපිනය' => $this->combineAddress([$case->nayakaru2_lipinaya1, $case->nayakaru2_lipinaya2, $case->nayakaru2_lipinaya3]),
             'ඇපකරු_1' => $case->aepakaru1_nama,
-            'ඇපකරු_1__ලිපිනය_1' => $case->aepakaru1_lipinaya1,
-            'ඇපකරු_1__ලිපිනය_2' => $case->aepakaru1_lipinaya2,
-            'ඇපකරු_1__ලිපිනය_3' => $case->aepakaru1_lipinaya3,
+            'ඇපකරු_1_ලිපිනය' => $this->combineAddress([$case->aepakaru1_lipinaya1, $case->aepakaru1_lipinaya2, $case->aepakaru1_lipinaya3]),
             'ඇපකරු_2_' => $case->aepakaru2_nama,
-            'ඇපකරු_2__ලිපිනය_1' => $case->aepakaru2_lipinaya1,
-            'ඇපකරු_2__ලිපිනය_2' => $case->aepakaru2_lipinaya2,
-            'ඇපකරු_2__ලිපිනය_3' => $case->aepakaru2_lipinaya3,
+            'ඇපකරු_2_ලිපිනය' => $this->combineAddress([$case->aepakaru2_lipinaya1, $case->aepakaru2_lipinaya2, $case->aepakaru2_lipinaya3]),
             'ආරවුල්_මුදල' => number_format((float) ($case->arawul_mudala ?? 0), 2),
             'පොලී_ප්රතිශතය' => DocumentValueFormatter::percentage($case->poli_prathishathaya),
         ] as $key => $value) {
             $template->setValue($key, $value ?? '');
         }
+    }
+
+    /** @param array<int, string|null> $addressLines */
+    private function combineAddress(array $addressLines): string
+    {
+        return collect($addressLines)
+            ->filter(fn (?string $addressLine): bool => filled($addressLine))
+            ->implode(', ');
     }
 }
