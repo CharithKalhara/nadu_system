@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Document;
+use App\Models\Company;
 use App\Models\Nadu;
 use App\Support\DocumentValueFormatter;
 use Illuminate\Support\Facades\Auth;
@@ -10,13 +11,21 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class MulKola2Service
 {
-    public function generate(Nadu $case): Document
+    public function generate(Nadu $case, array $templateValues = []): Document
     {
         $template = new TemplateProcessor(storage_path('app/documents/mul_kola_2.docx'));
+        $company = Company::find(session('company_id'));
 
         $template->setValue('first_pages_block', '');
         $template->setValue('/first_pages_block', '');
+        $template->setValue('නඩු_අංකය_ format ', $templateValues['nadu_ankaya_format'] ?? $company?->nadu_ankaya_format ?? '');
         $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
+        $template->setValue('සමිතිය', $templateValues['company_name'] ?? $company?->company_name ?? '');
+        $template->setValue('නියෝජිතයා', $templateValues['niyojithaya'] ?? $company?->niyojithaya ?? '');
+        $template->setValue('නියෝජිතයා_ලිපිනය_1', $templateValues['niyojithaya_lipinaya_1'] ?? $company?->niyojithaya_lipinaya_1 ?? '');
+        // The supplied template has a leading space in these two placeholder names.
+        $template->setValue(' නියෝජිතයා_ලිපිනය_2', $templateValues['niyojithaya_lipinaya_2'] ?? $company?->niyojithaya_lipinaya_2 ?? '');
+        $template->setValue(' නියෝජිතයා_ලිපිනය_3', $templateValues['niyojithaya_lipinaya_3'] ?? $company?->niyojithaya_lipinaya_3 ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_1__ලිපිනය_1', $case->nayakaru1_lipinaya1 ?? '');
         $template->setValue('ණයකරු_1__ලිපිනය_2', $case->nayakaru1_lipinaya2 ?? '');

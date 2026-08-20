@@ -84,6 +84,17 @@ class CreateDocument extends CreateRecord
             ]));
         }
 
+        if ($data['document_type'] === 'mul_kola_2') {
+            $company->update(Arr::only($data, [
+                'company_name',
+                'nadu_ankaya_format',
+                'niyojithaya',
+                'niyojithaya_lipinaya_1',
+                'niyojithaya_lipinaya_2',
+                'niyojithaya_lipinaya_3',
+            ]));
+        }
+
         if (in_array($data['document_type'], ['wibaga_dinaya_1', 'wibaga_dinaya_2'], true)) {
             $company->update(Arr::only($data, [
                 'first_sithasiya_date',
@@ -104,7 +115,7 @@ class CreateDocument extends CreateRecord
                 'hethupata' => app(BulkHethupataService::class)->createDocumentForNaduIds($naduIds),
                 'mudritha_pradanaya' => app(BulkMudrithaPradanayaService::class)->createDocumentForNaduIds($naduIds),
                 'mudritha_pradanaya_second_page' => app(BulkMudrithaPradanayaSecondPageService::class)->createDocumentForNaduIds($naduIds),
-                'mul_kola_2' => app(BulkMulKola2Service::class)->createDocumentForNaduIds($naduIds),
+                'mul_kola_2' => app(BulkMulKola2Service::class)->createDocumentForNaduIds($naduIds, $data),
                 'thirakawara_journal' => app(BulkThirakawaraJournalService::class)->createDocumentForNaduIds($naduIds, $data),
                 'thinduwa_written' => app(BulkThinduwaWrittenService::class)->createDocumentForNaduIds($naduIds),
                 'thinduwa_yawima' => app(BulkThinduwaYawimaService::class)->createDocumentForNaduIds($naduIds),
@@ -151,7 +162,7 @@ class CreateDocument extends CreateRecord
             'mudritha_pradanaya_second_page' => app(MudrithaPradanayaSecondPageService::class)->generate($case),
             'wibaga_dinaya_1' => app(WibagaDinaya1Service::class)->generate($case),
             'wibaga_dinaya_2' => app(WibagaDinaya2Service::class)->generate($case),
-            'mul_kola_2' => app(MulKola2Service::class)->generate($case),
+            'mul_kola_2' => app(MulKola2Service::class)->generate($case, $data),
             'hethupata' => app(HethupataService::class)->generate($case),
             'sithasi_and_envelope' => $this->generateSithasiAndEnvelope($case),
             default => app(SithasiService::class)->generate($case),

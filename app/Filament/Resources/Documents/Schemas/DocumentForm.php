@@ -43,8 +43,14 @@ class DocumentForm
                 TextInput::make('nadu_ankaya_format')
                     ->label('නඩු අංකය ආකෘතිය')
                     ->default(fn (): ?string => self::company()?->nadu_ankaya_format)
-                    ->visible(fn (Get $get): bool => $get('document_type') === 'sithasi')
-                    ->required(fn (Get $get): bool => $get('document_type') === 'sithasi'),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'mul_kola_2'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'mul_kola_2'], true)),
+
+                TextInput::make('company_name')
+                    ->label('සමිතිය')
+                    ->default(fn (): ?string => self::company()?->company_name)
+                    ->visible(fn (Get $get): bool => $get('document_type') === 'mul_kola_2')
+                    ->required(fn (Get $get): bool => $get('document_type') === 'mul_kola_2'),
 
                 TextInput::make('teeraka')
                     ->label('තීරක')
@@ -67,25 +73,25 @@ class DocumentForm
                 TextInput::make('niyojithaya')
                     ->label('නියෝජිතයා')
                     ->default(fn (): ?string => self::company()?->niyojithaya)
-                    ->visible(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal')
-                    ->required(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal'),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['thirakawara_journal', 'mul_kola_2'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['thirakawara_journal', 'mul_kola_2'], true)),
 
                 TextInput::make('niyojithaya_lipinaya_1')
                     ->label('නියෝජිතයා ලිපිනය 1')
                     ->default(fn (): ?string => self::company()?->niyojithaya_lipinaya_1)
-                    ->visible(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal')
-                    ->required(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal'),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['thirakawara_journal', 'mul_kola_2'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['thirakawara_journal', 'mul_kola_2'], true)),
 
                 TextInput::make('niyojithaya_lipinaya_2')
                     ->label('නියෝජිතයා ලිපිනය 2')
                     ->default(fn (): ?string => self::company()?->niyojithaya_lipinaya_2)
-                    ->visible(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal')
-                    ->required(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal'),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['thirakawara_journal', 'mul_kola_2'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['thirakawara_journal', 'mul_kola_2'], true)),
 
                 TextInput::make('niyojithaya_lipinaya_3')
                     ->label('නියෝජිතයා ලිපිනය 3')
                     ->default(fn (): ?string => self::company()?->niyojithaya_lipinaya_3)
-                    ->visible(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal'),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['thirakawara_journal', 'mul_kola_2'], true)),
 
                 DatePicker::make('first_sithasiya_date')
                     ->label('පළමු සිතාසිය දිනය')

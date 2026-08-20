@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Nadu;
+use App\Models\Company;
 use App\Support\DocumentValueFormatter;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -30,10 +31,19 @@ class BulkMulKola2Service extends BulkThinduwaWrittenService
 
     protected function fillTemplate(TemplateProcessor $template, Nadu $case, array $templateValues = []): void
     {
+        $company = Company::find(session('company_id'));
+
         foreach ([
             'first_pages_block' => '',
             '/first_pages_block' => '',
+            'නඩු_අංකය_ format ' => $templateValues['nadu_ankaya_format'] ?? $company?->nadu_ankaya_format,
             'නඩු_අංකය' => $case->nadu_ankaya,
+            'සමිතිය' => $templateValues['company_name'] ?? $company?->company_name,
+            'නියෝජිතයා' => $templateValues['niyojithaya'] ?? $company?->niyojithaya,
+            'නියෝජිතයා_ලිපිනය_1' => $templateValues['niyojithaya_lipinaya_1'] ?? $company?->niyojithaya_lipinaya_1,
+            // The supplied template has a leading space in these two placeholder names.
+            ' නියෝජිතයා_ලිපිනය_2' => $templateValues['niyojithaya_lipinaya_2'] ?? $company?->niyojithaya_lipinaya_2,
+            ' නියෝජිතයා_ලිපිනය_3' => $templateValues['niyojithaya_lipinaya_3'] ?? $company?->niyojithaya_lipinaya_3,
             'ණයකරු_1' => $case->nayakaru1_nama,
             'ණයකරු_1__ලිපිනය_1' => $case->nayakaru1_lipinaya1,
             'ණයකරු_1__ලිපිනය_2' => $case->nayakaru1_lipinaya2,
