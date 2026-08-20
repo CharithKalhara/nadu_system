@@ -86,8 +86,8 @@ class CreateDocument extends CreateRecord
 
         if ($data['document_type'] === 'mul_kola_2') {
             $company->update(Arr::only($data, [
-                'company_name',
                 'nadu_ankaya_format',
+                'samithiya_lipinaya',
                 'niyojithaya',
                 'niyojithaya_lipinaya_1',
                 'niyojithaya_lipinaya_2',

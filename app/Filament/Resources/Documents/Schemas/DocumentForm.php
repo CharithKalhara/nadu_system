@@ -46,10 +46,10 @@ class DocumentForm
                     ->visible(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'mul_kola_2'], true))
                     ->required(fn (Get $get): bool => in_array($get('document_type'), ['sithasi', 'mul_kola_2'], true)),
 
-                TextInput::make('company_name')
-                    ->label('සමිතිය')
-                    ->default(fn (): ?string => self::company()?->company_name)
-                    ->visible(fn (Get $get): bool => $get('document_type') === 'mul_kola_2')
+                TextInput::make('samithiya_lipinaya')
+                    ->label('සමිතිය ලිපිනය')
+                    ->default(fn (): ?string => self::company()?->samithiya_lipinaya)
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['thirakawara_journal', 'mul_kola_2'], true))
                     ->required(fn (Get $get): bool => $get('document_type') === 'mul_kola_2'),
 
                 TextInput::make('teeraka')
@@ -63,12 +63,6 @@ class DocumentForm
                     ->default(fn (): ?string => self::company()?->teeraka_name_with_initials)
                     ->visible(fn (Get $get): bool => $get('document_type') === 'thinduwa_yawima')
                     ->required(fn (Get $get): bool => $get('document_type') === 'thinduwa_yawima'),
-
-                TextInput::make('samithiya_lipinaya')
-                    ->label('සමිතිය ලිපිනය')
-                    ->default(fn (): ?string => self::company()?->samithiya_lipinaya)
-                    ->visible(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal')
-                    ->required(fn (Get $get): bool => $get('document_type') === 'thirakawara_journal'),
 
                 TextInput::make('niyojithaya')
                     ->label('නියෝජිතයා')
