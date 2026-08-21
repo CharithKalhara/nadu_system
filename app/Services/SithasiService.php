@@ -61,6 +61,9 @@ class SithasiService
         $template->setValue('ඇපකරු_2'.$suffix, $case->aepakaru2_nama ?? '');
         $template->setValue('තීරක'.$suffix, $company->teeraka ?? '');
         $template->setValue('කාර්යාලය'.$suffix, $company->karyalaya ?? '');
+        $createdDate = now()->format('Y/m/d');
+        $template->setValue('අද_දිනය'.$suffix, $createdDate);
+        $template->setValue('ada_dinaya'.$suffix, $createdDate);
         $template->setValue('වර්ෂය'.$suffix, $date['warshaya']);
         $template->setValue('මාසය'.$suffix, $date['masaya']);
         $template->setValue('දිනය'.$suffix, $date['dinaya']);
