@@ -132,6 +132,24 @@ class DocumentForm
                     ->visible(fn (Get $get): bool => $get('document_type') === 'sithasi')
                     ->required(fn (Get $get): bool => $get('document_type') === 'sithasi'),
 
+                DatePicker::make('thinduwa_labadena_dinaya')
+                    ->label('තීන්දුව ලබාදුන් දිනය')
+                    ->default(fn (): ?string => self::company()?->thinduwa_labadena_dinaya)
+                    ->visible(fn (Get $get): bool => $get('document_type') === 'thinduwa_written')
+                    ->required(fn (Get $get): bool => $get('document_type') === 'thinduwa_written'),
+
+                DatePicker::make('gewia_yuthu_dinaya')
+                    ->label('ගෙවිය යුතු දිනය')
+                    ->default(fn (): ?string => self::company()?->gewia_yuthu_dinaya)
+                    ->visible(fn (Get $get): bool => $get('document_type') === 'thinduwa_written')
+                    ->required(fn (Get $get): bool => $get('document_type') === 'thinduwa_written'),
+
+                DatePicker::make('abiyachana_idiripath_kala_yuthu_dinaya')
+                    ->label('අභියාචනය ඉදිරිපත් කළ යුතු දිනය')
+                    ->default(fn (): ?string => self::company()?->abiyachana_idiripath_kala_yuthu_dinaya)
+                    ->visible(fn (Get $get): bool => $get('document_type') === 'thinduwa_written')
+                    ->required(fn (Get $get): bool => $get('document_type') === 'thinduwa_written'),
+
                 DatePicker::make('first_sithasiya_date')
                     ->label('1 විභාග දිනය')
                     ->default(fn (): ?string => self::company()?->first_sithasiya_date)
