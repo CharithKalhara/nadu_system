@@ -95,11 +95,12 @@ class CreateDocument extends CreateRecord
             ]));
         }
 
-        if ($data['document_type'] === 'thinduwa_written') {
+        if (in_array($data['document_type'], ['thinduwa_written', 'thinduwa_yawima'], true)) {
             $company->update(Arr::only($data, [
                 'thinduwa_labadena_dinaya',
                 'gewia_yuthu_dinaya',
                 'abiyachana_idiripath_kala_yuthu_dinaya',
+                'thepal_gasthu',
             ]));
         }
 

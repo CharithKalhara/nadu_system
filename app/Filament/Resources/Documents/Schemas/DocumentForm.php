@@ -150,6 +150,14 @@ class DocumentForm
                     ->visible(fn (Get $get): bool => $get('document_type') === 'thinduwa_written')
                     ->required(fn (Get $get): bool => $get('document_type') === 'thinduwa_written'),
 
+                TextInput::make('thepal_gasthu')
+                    ->label('තැපැල් ගාස්තු')
+                    ->numeric()
+                    ->minValue(0)
+                    ->default(fn (): mixed => self::company()?->thepal_gasthu)
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['thinduwa_written', 'thinduwa_yawima'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['thinduwa_written', 'thinduwa_yawima'], true)),
+
                 DatePicker::make('first_sithasiya_date')
                     ->label('1 විභාග දිනය')
                     ->default(fn (): ?string => self::company()?->first_sithasiya_date)
