@@ -15,6 +15,7 @@ class Company extends Model
         'teeraka_name_with_initials',
         'karyalaya',
         'wibhaga_dinaya',
+        'thinduwa_labadena_dinaya',
         'welawa',
         'samithiya_lipinaya',
         'niyojithaya',
