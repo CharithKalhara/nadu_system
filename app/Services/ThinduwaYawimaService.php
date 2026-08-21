@@ -45,6 +45,9 @@ class ThinduwaYawimaService
         $template->setValue('සමිතිය'.$suffix, $company?->company_name ?? '');
         $template->setValue('නඩු_අංකය_ format '.$suffix, $company?->nadu_ankaya_format ?? '');
         $template->setValue('තීරක'.$suffix, $company?->teeraka_name_with_initials ?? $company?->teeraka ?? '');
+        $template->setValue('තීන්දුව_ලබාදුන්_දිනය'.$suffix, str_replace('-', '/', (string) ($company?->thinduwa_labadena_dinaya ?? '')));
+        $template->setValue('ගෙවිය_යුතු_දිනය'.$suffix, str_replace('-', '/', (string) ($company?->gewia_yuthu_dinaya ?? '')));
+        $template->setValue('අභියාචනය_ඉදිරිපත්_කළ_යුතු_දිනය'.$suffix, str_replace('-', '/', (string) ($company?->abiyachana_idiripath_kala_yuthu_dinaya ?? '')));
         $template->setValue('ණයකරු_1'.$suffix, $case->nayakaru1_nama ?? '');
         $this->setSecondDebtorParagraph($template, $case, $suffix);
         $template->setValue('ඇපකරු_1'.$suffix, $case->aepakaru1_nama ?? '');

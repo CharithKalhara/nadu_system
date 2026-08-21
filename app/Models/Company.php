@@ -16,6 +16,8 @@ class Company extends Model
         'karyalaya',
         'wibhaga_dinaya',
         'thinduwa_labadena_dinaya',
+        'gewia_yuthu_dinaya',
+        'abiyachana_idiripath_kala_yuthu_dinaya',
         'welawa',
         'samithiya_lipinaya',
         'niyojithaya',
