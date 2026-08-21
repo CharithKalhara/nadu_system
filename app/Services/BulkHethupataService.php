@@ -40,7 +40,7 @@ class BulkHethupataService extends BulkThinduwaWrittenService
             'නඩු_අංකය_ format ' => $company?->nadu_ankaya_format,
             'නඩු_අංකය' => $case->nadu_ankaya,
             'ණයකරු_1' => $case->nayakaru1_nama,
-            'ණයකරු_2' => $case->nayakaru2_nama,
+            'ණයකරු_2' => ($secondDebtor = trim((string) ($case->nayakaru2_nama ?? ''))) === '' ? '' : ', '.$secondDebtor,
             'ඇපකරු_1' => $case->aepakaru1_nama,
             'ඇපකරු_2_' => $case->aepakaru2_nama,
             'දුන්_දිනය' => $case->dun_dinaya,
