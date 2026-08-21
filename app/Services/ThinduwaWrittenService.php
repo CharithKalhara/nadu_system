@@ -45,7 +45,8 @@ class ThinduwaWrittenService
         $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('සමිතිය', $company?->company_name ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
-        $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
+        $secondDebtor = trim((string) ($case->nayakaru2_nama ?? ''));
+        $template->setValue('ණයකරු_2', $secondDebtor === '' ? '' : ', '.$secondDebtor);
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');
         $template->setValue('ඇපකරු_2', $case->aepakaru2_nama ?? '');
         $template->setValue('මුල්_මුදල', number_format((float) ($case->mul_mudala ?? 0), 0));
