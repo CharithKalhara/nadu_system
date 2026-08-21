@@ -18,6 +18,7 @@ class Company extends Model
         'thinduwa_labadena_dinaya',
         'gewia_yuthu_dinaya',
         'abiyachana_idiripath_kala_yuthu_dinaya',
+        'thepal_gasthu',
         'welawa',
         'samithiya_lipinaya',
         'niyojithaya',

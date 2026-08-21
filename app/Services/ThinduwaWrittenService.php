@@ -47,6 +47,7 @@ class ThinduwaWrittenService
         $template->setValue('තීන්දුව_ලබාදුන්_දිනය', str_replace('-', '/', (string) ($company?->thinduwa_labadena_dinaya ?? '')));
         $template->setValue('ගෙවිය_යුතු_දිනය', str_replace('-', '/', (string) ($company?->gewia_yuthu_dinaya ?? '')));
         $template->setValue('අභියාචනය_ඉදිරිපත්_කළ_යුතු_දිනය', str_replace('-', '/', (string) ($company?->abiyachana_idiripath_kala_yuthu_dinaya ?? '')));
+        $template->setValue('තැපැල් ගාස්තු', number_format((float) ($company?->thepal_gasthu ?? 0), 2));
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $secondDebtor = trim((string) ($case->nayakaru2_nama ?? ''));
         $template->setValue('ණයකරු_2', $secondDebtor === '' ? '' : ', '.$secondDebtor);
