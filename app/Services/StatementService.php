@@ -14,6 +14,29 @@ class StatementService
     {
         $template = new TemplateProcessor(storage_path('app/documents/statement.docx'));
 
+        $this->fillTemplate($template, $case);
+
+        $directory = storage_path('app/public/statements');
+
+        if (! is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        $fileName = 'statement_'.$case->id.'_'.now()->format('YmdHis').'.docx';
+        $template->saveAs($directory.'/'.$fileName);
+
+        return Document::create([
+            'company_id' => session('company_id'),
+            'nadu_id' => $case->id,
+            'document_type' => 'Statement',
+            'file_name' => $fileName,
+            'file_path' => 'public/statements/'.$fileName,
+            'generated_by' => Auth::id(),
+        ]);
+    }
+
+    public function fillTemplate(TemplateProcessor $template, Nadu $case): void
+    {
         $loanDate = $case->dun_dinaya
             ? Carbon::parse($case->dun_dinaya)->format('Y-m-d')
             : '';
@@ -57,22 +80,5 @@ class StatementService
             $template->setValue($placeholder, $value);
         }
 
-        $directory = storage_path('app/public/statements');
-
-        if (! is_dir($directory)) {
-            mkdir($directory, 0755, true);
-        }
-
-        $fileName = 'statement_'.$case->id.'_'.now()->format('YmdHis').'.docx';
-        $template->saveAs($directory.'/'.$fileName);
-
-        return Document::create([
-            'company_id' => session('company_id'),
-            'nadu_id' => $case->id,
-            'document_type' => 'Statement',
-            'file_name' => $fileName,
-            'file_path' => 'public/statements/'.$fileName,
-            'generated_by' => Auth::id(),
-        ]);
     }
 }

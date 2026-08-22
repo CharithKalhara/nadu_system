@@ -13,6 +13,7 @@ use App\Services\BulkMudrithaPradanayaService;
 use App\Services\BulkMudrithaPradanayaSecondPageService;
 use App\Services\BulkMulKola2Service;
 use App\Services\BulkSithasiService;
+use App\Services\BulkStatementService;
 use App\Services\BulkThirakawaraJournalService;
 use App\Services\BulkThinduwaWrittenService;
 use App\Services\BulkThinduwaYawimaService;
@@ -113,7 +114,7 @@ class CreateDocument extends CreateRecord
             ]));
         }
 
-        if (in_array($data['document_type'], ['sithasi', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true)) {
+        if (in_array($data['document_type'], ['sithasi', 'statement', 'cover_page', 'envelope', 'thinduwa_yawima', 'thinduwa_written', 'thirakawara_journal', 'mudritha_pradanaya', 'mudritha_pradanaya_second_page', 'wibaga_dinaya_1', 'wibaga_dinaya_2', 'mul_kola_2', 'hethupata'], true)) {
             $naduIds = $data['scope'] === 'all'
                 ? Nadu::query()->where('company_id', $company->id)->pluck('id')->all()
                 : $data['nadu_ids'];
@@ -121,6 +122,7 @@ class CreateDocument extends CreateRecord
             $document = match ($data['document_type']) {
                 'cover_page' => app(BulkCoverPageService::class)->createDocumentForNaduIds($naduIds),
                 'envelope' => app(BulkEnvelopeService::class)->createDocumentForNaduIds($naduIds),
+                'statement' => app(BulkStatementService::class)->createDocumentForNaduIds($naduIds),
                 'hethupata' => app(BulkHethupataService::class)->createDocumentForNaduIds($naduIds),
                 'mudritha_pradanaya' => app(BulkMudrithaPradanayaService::class)->createDocumentForNaduIds($naduIds),
                 'mudritha_pradanaya_second_page' => app(BulkMudrithaPradanayaSecondPageService::class)->createDocumentForNaduIds($naduIds),
@@ -136,6 +138,7 @@ class CreateDocument extends CreateRecord
             $documentName = match ($data['document_type']) {
                 'cover_page' => 'cover page',
                 'envelope' => 'envelope',
+                'statement' => 'statement',
                 'hethupata' => 'Hethupata',
                 'mudritha_pradanaya' => 'මුද්‍රිත ප්‍රදානය',
                 'mudritha_pradanaya_second_page' => 'මුද්‍රිත ප්‍රදානය (දෙවන පිට)',
