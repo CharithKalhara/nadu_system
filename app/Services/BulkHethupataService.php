@@ -43,7 +43,7 @@ class BulkHethupataService extends BulkThinduwaWrittenService
             'ණයකරු_2' => ($secondDebtor = trim((string) ($case->nayakaru2_nama ?? ''))) === '' ? '' : ', '.$secondDebtor,
             'ඇපකරු_1' => $case->aepakaru1_nama,
             'ඇපකරු_2_' => $case->aepakaru2_nama,
-            'දුන්_දිනය' => $case->dun_dinaya,
+            'දුන්_දිනය' => $case->dun_dinaya?->format('Y/m/d'),
             'දුන්_ණය_මුදල' => number_format((float) ($case->dun_naya_mudala ?? 0), 0),
             'පොලී_ප්රතිශතය' => DocumentValueFormatter::percentage($case->poli_prathishathaya),
             'කාලය' => $case->kalaya,

@@ -26,7 +26,10 @@ class HethupataService
         $template->setValue('ණයකරු_2', $secondDebtor === '' ? '' : ', '.$secondDebtor);
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');
         $template->setValue('ඇපකරු_2_', $case->aepakaru2_nama ?? '');
-        $template->setValue('දුන්_දිනය', $case->dun_dinaya ?? '');
+        $template->setValue(
+            'දුන්_දිනය',
+            $case->dun_dinaya ? $case->dun_dinaya->format('Y/m/d') : '',
+        );
         $template->setValue('දුන්_ණය_මුදල', number_format((float) ($case->dun_naya_mudala ?? 0), 0));
         $template->setValue('පොලී_ප්රතිශතය', DocumentValueFormatter::percentage($case->poli_prathishathaya));
         $template->setValue('කාලය', $case->kalaya ?? '');
