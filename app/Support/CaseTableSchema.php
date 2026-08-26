@@ -46,6 +46,8 @@ class CaseTableSchema
 
         $table->date('awasan_mudal_bendima')->nullable();
         $table->integer('dina_ganuna')->nullable();
+        $table->integer('apal_pa')->nullable();
+        $table->integer('apal_vi')->nullable();
 
         $table->decimal('mul_mudala', 15, 2)->nullable();
         $table->decimal('poliya', 15, 2)->nullable();

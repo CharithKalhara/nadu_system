@@ -27,6 +27,8 @@ class NaduForm
                 TextInput::make('poli_prathishathaya')->label('පොලී ප්‍රතිශතය')->numeric(),
                 DatePicker::make('awasan_mudal_bendima')->label('අවසන් මුදල් බැඳීම'),
                 TextInput::make('dina_ganuna')->label('දින ගණන')->numeric(),
+                TextInput::make('apal_pa')->label('ඇපැල් පැ')->numeric(),
+                TextInput::make('apal_vi')->label('ඇපැල් වි')->numeric(),
                 TextInput::make('mul_mudala')->label('මුල් මුදල')->numeric(),
                 TextInput::make('poliya')->label('පොලිය')->numeric(),
                 TextInput::make('nadu_gasthu')->label('නඩු ගාස්තු')->numeric(),

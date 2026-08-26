@@ -130,6 +130,14 @@ class NaduForm
                             ->label('දින ගණන')
                             ->numeric(),
 
+                        TextInput::make('apal_pa')
+                            ->label('ඇපැල් පැ')
+                            ->numeric(),
+
+                        TextInput::make('apal_vi')
+                            ->label('ඇපැල් වි')
+                            ->numeric(),
+
                         TextInput::make('mul_mudala')
                             ->label('මුල් මුදල')
                             ->numeric(),

@@ -15,12 +15,6 @@ class CompanyForm
                     ->label('Company Name')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('apal_pa')
-                    ->label('ඇපැල් පැ')
-                    ->numeric(),
-                TextInput::make('apal_vi')
-                    ->label('ඇපැල් වි')
-                    ->numeric(),
             ]);
     }
 }
