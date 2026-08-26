@@ -58,5 +58,7 @@ class ThinduwaWrittenService
         $template->setValue('පොලිය', number_format((float) ($case->poliya ?? 0), 0));
         $template->setValue('නඩු_ගාස්තු', number_format((float) ($case->nadu_gasthu ?? 0), 0));
         $template->setValue('එකතුව', number_format((float) ($case->total ?? 0), 0));
+        $template->setValue('ඇපැල්_පැ', number_format((float) ($case->apal_pa ?? 0), 2));
+        $template->setValue('ඇපැල්_වි', number_format((float) ($case->apal_vi ?? 0), 2));
     }
 }

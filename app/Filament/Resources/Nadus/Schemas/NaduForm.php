@@ -132,11 +132,15 @@ class NaduForm
 
                         TextInput::make('apal_pa')
                             ->label('ඇපැල් පැ')
-                            ->numeric(),
+                            ->numeric()
+                            ->prefix('LKR')
+                            ->step(0.01),
 
                         TextInput::make('apal_vi')
                             ->label('ඇපැල් වි')
-                            ->numeric(),
+                            ->numeric()
+                            ->prefix('LKR')
+                            ->step(0.01),
 
                         TextInput::make('mul_mudala')
                             ->label('මුල් මුදල')

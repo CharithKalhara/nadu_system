@@ -13,6 +13,8 @@ class Nadu extends Model
     protected $casts = [
         'dun_dinaya' => 'date',
         'awasan_mudal_bendima' => 'date',
+        'apal_pa' => 'decimal:2',
+        'apal_vi' => 'decimal:2',
     ];
 
     public function getTable()

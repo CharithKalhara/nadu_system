@@ -23,13 +23,13 @@ return new class extends Migration
 
                 if (! $schema->hasColumn($tableName, 'apal_pa')) {
                     $schema->table($tableName, function (Blueprint $table): void {
-                        $table->integer('apal_pa')->nullable();
+                        $table->decimal('apal_pa', 15, 2)->nullable();
                     });
                 }
 
                 if (! $schema->hasColumn($tableName, 'apal_vi')) {
                     $schema->table($tableName, function (Blueprint $table): void {
-                        $table->integer('apal_vi')->nullable();
+                        $table->decimal('apal_vi', 15, 2)->nullable();
                     });
                 }
             });
