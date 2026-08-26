@@ -10,6 +10,11 @@ class Nadu extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'dun_dinaya' => 'date',
+        'awasan_mudal_bendima' => 'date',
+    ];
+
     public function getTable()
     {
         return session('company_table', 'cases');

@@ -44,7 +44,7 @@ class CaseTableSchema
         $table->string('kalaya')->nullable();
         $table->decimal('poli_prathishathaya', 5, 2)->nullable();
 
-        $table->decimal('awasan_mudal_bendima', 15, 2)->nullable();
+        $table->date('awasan_mudal_bendima')->nullable();
         $table->integer('dina_ganuna')->nullable();
 
         $table->decimal('mul_mudala', 15, 2)->nullable();

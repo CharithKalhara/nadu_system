@@ -71,7 +71,7 @@ class NaduInfolist
                         TextEntry::make('arawul_mudala')->label('ආරවුල් මුදල')->money('LKR'),
                         TextEntry::make('dun_naya_mudala')->label('දුන් ණය මුදල')->money('LKR'),
                         TextEntry::make('poli_prathishathaya')->label('පොලී ප්‍රතිශතය'),
-                        TextEntry::make('awasan_mudal_bendima')->label('අවසන් මුදල් බැඳීම')->money('LKR'),
+                        TextEntry::make('awasan_mudal_bendima')->label('අවසන් මුදල් බැඳීම')->date(),
                         TextEntry::make('dina_ganuna')->label('දින ගණන'),
                         TextEntry::make('mul_mudala')->label('මුල් මුදල')->money('LKR'),
                         TextEntry::make('poliya')->label('පොලිය')->money('LKR'),

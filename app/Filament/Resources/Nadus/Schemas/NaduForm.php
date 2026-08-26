@@ -123,9 +123,8 @@ class NaduForm
                             ->label('පොලී ප්‍රතිශතය')
                             ->numeric(),
 
-                        TextInput::make('awasan_mudal_bendima')
-                            ->label('අවසන් මුදල් බැඳීම')
-                            ->numeric(),
+                        DatePicker::make('awasan_mudal_bendima')
+                            ->label('අවසන් මුදල් බැඳීම'),
 
                         TextInput::make('dina_ganuna')
                             ->label('දින ගණන')

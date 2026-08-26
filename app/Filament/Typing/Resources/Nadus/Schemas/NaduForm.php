@@ -25,7 +25,7 @@ class NaduForm
                 TextInput::make('dun_naya_mudala')->label('දුන් ණය මුදල')->numeric(),
                 TextInput::make('arawul_mudala')->label('ආරවුල් මුදල')->numeric(),
                 TextInput::make('poli_prathishathaya')->label('පොලී ප්‍රතිශතය')->numeric(),
-                TextInput::make('awasan_mudal_bendima')->label('අවසන් මුදල් බැඳීම')->numeric(),
+                DatePicker::make('awasan_mudal_bendima')->label('අවසන් මුදල් බැඳීම'),
                 TextInput::make('dina_ganuna')->label('දින ගණන')->numeric(),
                 TextInput::make('mul_mudala')->label('මුල් මුදල')->numeric(),
                 TextInput::make('poliya')->label('පොලිය')->numeric(),
