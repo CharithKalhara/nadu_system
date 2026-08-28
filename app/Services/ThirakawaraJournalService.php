@@ -76,12 +76,22 @@ class ThirakawaraJournalService
             'ඇපකරු_1__ලිපිනය_1' => $case->aepakaru1_lipinaya1 ?? '',
             'ඇපකරු_1__ලිපිනය_2' => $case->aepakaru1_lipinaya2 ?? '',
             'ඇපකරු_1__ලිපිනය_3' => $case->aepakaru1_lipinaya3 ?? '',
+            'ඇපකරු_1_ලිපිනය' => $this->combineAddress([
+                $case->aepakaru1_lipinaya1,
+                $case->aepakaru1_lipinaya2,
+                $case->aepakaru1_lipinaya3,
+            ]),
             // The supplied Word template uses this exact placeholder name
             // (including the trailing underscore).
             'ඇපකරු_2_' => $case->aepakaru2_nama ?? '',
             'ඇපකරු_2__ලිපිනය_1' => $case->aepakaru2_lipinaya1 ?? '',
             'ඇපකරු_2__ලිපිනය_2' => $case->aepakaru2_lipinaya2 ?? '',
             'ඇපකරු_2__ලිපිනය_3' => $case->aepakaru2_lipinaya3 ?? '',
+            'ඇපකරු_2_ලිපිනය' => $this->combineAddress([
+                $case->aepakaru2_lipinaya1,
+                $case->aepakaru2_lipinaya2,
+                $case->aepakaru2_lipinaya3,
+            ]),
             'මුල්_මුදල' => number_format((float) ($case->mul_mudala ?? 0), 2),
             'පොලී_ප්රතිශතය' => DocumentValueFormatter::percentage($case->poli_prathishathaya),
             ' පළමු_සිතාසිය_දිනය' => $templateValues['first_sithasiya_date'] ?? $company?->first_sithasiya_date ?? '',
