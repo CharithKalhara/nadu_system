@@ -60,11 +60,18 @@ class ThirakawaraJournalService
             'ණයකරු_1__ලිපිනය_1' => $case->nayakaru1_lipinaya1 ?? '',
             'ණයකරු_1__ලිපිනය_2' => $case->nayakaru1_lipinaya2 ?? '',
             'ණයකරු_1__ලිපිනය_3' => $case->nayakaru1_lipinaya3 ?? '',
-            // Update these placeholder names if the journal template uses different names.
+            // These match the single-address placeholders used by the journal template.
+            'ණයකරු_1_ලිපිනය' => $this->combineAddress([
+                $case->nayakaru1_lipinaya1,
+                $case->nayakaru1_lipinaya2,
+                $case->nayakaru1_lipinaya3,
+            ]),
             'ණයකරු_2' => $case->nayakaru2_nama ?? '',
-            'ණයකරු_2__ලිපිනය_1' => $case->nayakaru2_lipinaya1 ?? '',
-            'ණයකරු_2__ලිපිනය_2' => $case->nayakaru2_lipinaya2 ?? '',
-            'ණයකරු_2__ලිපිනය_3' => $case->nayakaru2_lipinaya3 ?? '',
+            'ණයකරු_2_ලිපිනය' => $this->combineAddress([
+                $case->nayakaru2_lipinaya1,
+                $case->nayakaru2_lipinaya2,
+                $case->nayakaru2_lipinaya3,
+            ]),
             'ඇපකරු_1' => $case->aepakaru1_nama ?? '',
             'ඇපකරු_1__ලිපිනය_1' => $case->aepakaru1_lipinaya1 ?? '',
             'ඇපකරු_1__ලිපිනය_2' => $case->aepakaru1_lipinaya2 ?? '',
@@ -92,5 +99,13 @@ class ThirakawaraJournalService
         foreach ($values as $placeholder => $value) {
             $template->setValue($placeholder, $value);
         }
+    }
+
+    /** @param array<int, string|null> $addressLines */
+    private function combineAddress(array $addressLines): string
+    {
+        return collect($addressLines)
+            ->filter(fn (?string $addressLine): bool => filled($addressLine))
+            ->implode(', ');
     }
 }
