@@ -6,6 +6,7 @@ use App\Models\Document;
 use App\Models\Company;
 use App\Models\Nadu;
 use App\Support\DocumentValueFormatter;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -94,10 +95,10 @@ class ThirakawaraJournalService
             ]),
             'මුල්_මුදල' => number_format((float) ($case->mul_mudala ?? 0), 2),
             'පොලී_ප්රතිශතය' => DocumentValueFormatter::percentage($case->poli_prathishathaya),
-            ' පළමු_සිතාසිය_දිනය' => $templateValues['first_sithasiya_date'] ?? $company?->first_sithasiya_date ?? '',
+            ' පළමු_සිතාසිය_දිනය' => $this->formatDate($templateValues['first_sithasiya_date'] ?? $company?->first_sithasiya_date),
             'පළමු_සිතාසිය_post_office' => $templateValues['first_sithasiya_post_office'] ?? $company?->first_sithasiya_post_office ?? '',
             ' පළමු_සිතාසිය_කුවි_අං' => $templateValues['first_sithasiya_receipt_no'] ?? $company?->first_sithasiya_receipt_no ?? '',
-            'දෙවන_සිතාසිය_දිනය' => $templateValues['second_sithasiya_date'] ?? $company?->second_sithasiya_date ?? '',
+            'දෙවන_සිතාසිය_දිනය' => $this->formatDate($templateValues['second_sithasiya_date'] ?? $company?->second_sithasiya_date),
             ' දෙවන_සිතාසිය_post_office' => $templateValues['second_sithasiya_post_office'] ?? $company?->second_sithasiya_post_office ?? '',
             'දෙවන_සිතාසිය_කුවි_අං' => $templateValues['second_sithasiya_receipt_no'] ?? $company?->second_sithasiya_receipt_no ?? '',
             'පොලිය' => number_format((float) ($case->poliya ?? 0), 2),
@@ -117,5 +118,10 @@ class ThirakawaraJournalService
         return collect($addressLines)
             ->filter(fn (?string $addressLine): bool => filled($addressLine))
             ->implode(', ');
+    }
+
+    private function formatDate(mixed $date): string
+    {
+        return filled($date) ? Carbon::parse($date)->format('Y/m/d') : '';
     }
 }
