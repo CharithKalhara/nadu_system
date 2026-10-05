@@ -2,13 +2,52 @@
     "$schema": "https://www.schemastore.org/package.json",
     "private": true,
     "type": "module",
+    "name": "nadu_system",
+    "version": "1.0.0",
+    "description": "Nadu System Desktop Application",
+    "main": "electron/main.js",
     "scripts": {
+        "start": "electron .",
+        "dev": "vite",
         "build": "vite build",
-        "dev": "vite"
+        "electron:build": "electron-builder"
     },
+    "build": {
+    "appId": "lk.nadu.system",
+    "productName": "Nadu System",
+
+    "directories": {
+        "output": "dist-electron"
+    },
+
+    "files": [
+        "electron/**/*",
+        "package.json"
+    ],
+
+    "win": {
+        "target": [
+            {
+                "target": "nsis",
+                "arch": ["x64"]
+            }
+        ],
+        "icon": "electron/nadu-icon.ico"
+    },
+
+    "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": true,
+        "createDesktopShortcut": true,
+        "createStartMenuShortcut": true,
+        "shortcutName": "Nadu System"
+    }
+},
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
         "concurrently": "^9.0.1",
+        "electron": "^44.4.1",
+        "electron-builder": "^26.15.3",
         "laravel-vite-plugin": "^3.1",
         "tailwindcss": "^4.0.0",
         "vite": "^8.0.0"
