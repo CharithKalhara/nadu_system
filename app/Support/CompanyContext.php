@@ -84,13 +84,29 @@ class CompanyContext
 
     private function requestedCompanyId(Request $request): mixed
     {
-        $companyId = $request->query('company');
+        $companyId = $request->route('company');
 
-        if ($companyId || ! $request->hasHeader('X-Livewire')) {
+        if ($companyId) {
             return $companyId;
         }
 
+        $companyId = $request->query('company');
+
+        if ($companyId) {
+            return $companyId;
+        }
+
+        if (! $request->hasHeader('X-Livewire')) {
+            return null;
+        }
+
         $referer = $request->headers->get('referer');
+        $path = $referer ? parse_url($referer, PHP_URL_PATH) : null;
+
+        if (is_string($path) && preg_match('#/companies/(\d+)/(?:nadus|documents)(?:/|$)#', $path, $matches)) {
+            return $matches[1];
+        }
+
         $query = $referer ? parse_url($referer, PHP_URL_QUERY) : null;
         $parameters = [];
 

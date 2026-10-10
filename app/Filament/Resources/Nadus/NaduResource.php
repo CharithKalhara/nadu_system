@@ -13,6 +13,7 @@ use App\Filament\Resources\Nadus\Tables\NadusTable;
 use App\Models\Nadu;
 use BackedEnum;
 use Filament\Resources\Resource;
+use Filament\Panel;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
@@ -57,6 +58,11 @@ class NaduResource extends Resource
     public static function getRelations(): array
     {
         return [];
+    }
+
+    public static function getRoutePrefix(Panel $panel): string
+    {
+        return 'companies/{company}/nadus';
     }
 
     public static function getPages(): array
