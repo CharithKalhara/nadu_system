@@ -67,11 +67,4 @@ class CompanyDashboard extends Page
             'company' => $this->company->id,
         ]);
     }
-
-    public function getCompanySettingsUrl(): string
-    {
-        return route('filament.admin.resources.companies.edit', [
-            'record' => $this->company->id,
-        ]);
-    }
 }
