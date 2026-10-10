@@ -6,7 +6,7 @@
             Nadu System
         </a>
 
-        <a href="{{ url('/admin') }}" class="company-workspace-topbar__return">
+        <a href="{{ url('/') }}" class="company-workspace-topbar__return">
             <x-filament::icon icon="heroicon-o-arrow-left" />
             Return to dashboard
         </a>

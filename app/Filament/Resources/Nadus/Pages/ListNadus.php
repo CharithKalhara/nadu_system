@@ -31,7 +31,10 @@ class ListNadus extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->url(fn (): string => NaduResource::getUrl('create', [
+                    'company' => session('company_id'),
+                ])),
         ];
     }
 }
