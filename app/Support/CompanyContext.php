@@ -68,9 +68,7 @@ class CompanyContext
     {
         $companyId = $this->id();
 
-        if ($companyId === null) {
-            return 'cases';
-        }
+        abort_unless($companyId !== null, 404);
 
         $company = Company::query()->findOrFail($companyId);
         $tableName = (string) $company->table_name;

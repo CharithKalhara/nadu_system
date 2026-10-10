@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Documents\Tables;
 
+use App\Filament\Resources\Documents\DocumentResource;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -44,9 +45,17 @@ class DocumentsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
+                ViewAction::make()
+                    ->url(fn ($record): string => DocumentResource::getUrl('view', [
+                        'record' => $record,
+                        'company' => $record->company_id,
+                    ])),
 
-                EditAction::make(),
+                EditAction::make()
+                    ->url(fn ($record): string => DocumentResource::getUrl('edit', [
+                        'record' => $record,
+                        'company' => $record->company_id,
+                    ])),
 
                 Action::make('download')
                     ->label('Download')

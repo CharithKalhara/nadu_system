@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Nadus\Tables;
 
+use App\Filament\Resources\Nadus\NaduResource;
 use App\Services\BulkSithasiService;
 use App\Services\RecipientDirectoryService;
 use App\Services\SithasiService;
+use App\Support\CompanyContext;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
@@ -59,9 +61,17 @@ class NadusTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
+                ViewAction::make()
+                    ->url(fn ($record): string => NaduResource::getUrl('view', [
+                        'record' => $record,
+                        'company' => app(CompanyContext::class)->id(),
+                    ])),
 
-                EditAction::make(),
+                EditAction::make()
+                    ->url(fn ($record): string => NaduResource::getUrl('edit', [
+                        'record' => $record,
+                        'company' => app(CompanyContext::class)->id(),
+                    ])),
 
                 Action::make('generateSithasi')
                     ->label('Generate Sithasi')

@@ -15,7 +15,11 @@ class ViewDocument extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            EditAction::make()
+                ->url(fn ($record): string => DocumentResource::getUrl('edit', [
+                    'record' => $record,
+                    'company' => $record->company_id,
+                ])),
         ];
     }
 }

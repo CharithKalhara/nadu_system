@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Nadus\Pages;
 
 use App\Filament\Resources\Nadus\NaduResource;
+use App\Support\CompanyContext;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -15,7 +16,11 @@ class ViewNadu extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            EditAction::make()
+                ->url(fn ($record): string => NaduResource::getUrl('edit', [
+                    'record' => $record,
+                    'company' => app(CompanyContext::class)->id(),
+                ])),
         ];
     }
 }
