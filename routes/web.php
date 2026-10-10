@@ -6,10 +6,6 @@ use App\Services\SithasiService;
 use App\Support\CompanyContext;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware('auth')->get('/test-sithasi/{id}', function ($id) {
     app(CompanyContext::class)->resolve(request());
 
