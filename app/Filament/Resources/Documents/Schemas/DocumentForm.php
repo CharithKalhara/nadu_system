@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Documents\Schemas;
 
+use App\Support\CompanyContext;
 use App\Models\Company;
 use App\Models\Nadu;
 use Filament\Forms\Components\DatePicker;
@@ -224,12 +225,14 @@ class DocumentForm
 
     private static function getNaduOptions(): array
     {
-        if (! session('company_id')) {
+        $companyId = app(CompanyContext::class)->id();
+
+        if (! $companyId) {
             return [];
         }
 
         return Nadu::query()
-            ->where('company_id', session('company_id'))
+            ->where('company_id', $companyId)
             ->orderBy('nadu_ankaya')
             ->pluck('nadu_ankaya', 'id')
             ->all();
@@ -237,6 +240,6 @@ class DocumentForm
 
     private static function company(): ?Company
     {
-        return session('company_id') ? Company::find(session('company_id')) : null;
+        return app(CompanyContext::class)->company();
     }
 }

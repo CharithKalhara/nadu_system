@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Nadus\Pages;
 
-use App\Filament\Resources\Nadus\NaduResource;
 use App\Support\CompanyContext;
+use App\Filament\Resources\Nadus\NaduResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -15,7 +15,7 @@ class ListNadus extends ListRecords
 
     public function mount(): void
     {
-        $companyId = request()->query('company', session('company_id'));
+        $companyId = request()->query('company', app(CompanyContext::class)->id());
 
         if (! $companyId) {
             $this->redirectRoute('filament.admin.resources.companies.index');
@@ -31,7 +31,10 @@ class ListNadus extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->url(fn (): string => NaduResource::getUrl('create', [
+                    'company' => app(CompanyContext::class)->id(),
+                ])),
         ];
     }
 }

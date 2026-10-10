@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Nadu;
 use Illuminate\Support\Carbon;
@@ -26,7 +27,7 @@ class StatementService
         $template->saveAs($directory.'/'.$fileName);
 
         return Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $case->id,
             'document_type' => 'Statement',
             'file_name' => $fileName,

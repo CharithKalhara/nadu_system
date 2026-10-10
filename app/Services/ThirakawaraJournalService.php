@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Company;
 use App\Models\Nadu;
@@ -26,7 +27,7 @@ class ThirakawaraJournalService
         $template->saveAs($directory.'/'.$fileName);
 
         return Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $case->id,
             'document_type' => 'තීරකවරයාගේ ජර්නලය',
             'file_name' => $fileName,
@@ -42,7 +43,7 @@ class ThirakawaraJournalService
 
     public function fillTemplate(TemplateProcessor $template, Nadu $case, array $templateValues = []): void
     {
-        $company = Company::find(session('company_id'));
+        $company = app(CompanyContext::class)->company();
         $values = [
             'thirakawara_journal_block' => '',
             '/thirakawara_journal_block' => '',

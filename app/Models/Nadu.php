@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
+use App\Support\CompanyContext;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use App\Support\CompanyContext;
-
 class Nadu extends Model
 {
     protected $connection = 'companies';

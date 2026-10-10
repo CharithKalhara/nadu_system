@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Nadus\Pages;
 
-use App\Filament\Resources\Nadus\NaduResource;
 use App\Support\CompanyContext;
+use App\Filament\Resources\Nadus\NaduResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateNadu extends CreateRecord
@@ -14,7 +14,7 @@ class CreateNadu extends CreateRecord
 
     public function mount(): void
     {
-        if (! request()->query('company', session('company_id'))) {
+        if (! request()->query('company', app(CompanyContext::class)->id())) {
             $this->redirectRoute('filament.admin.resources.companies.index');
 
             return;

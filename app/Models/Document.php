@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
+use App\Support\CompanyContext;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Support\CompanyContext;
-
 class Document extends Model
 {
     protected $fillable = [

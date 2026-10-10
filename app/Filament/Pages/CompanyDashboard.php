@@ -2,10 +2,10 @@
 
 namespace App\Filament\Pages;
 
+use App\Support\CompanyContext;
 use App\Models\Company;
 use App\Models\Document;
 use App\Models\Nadu;
-use App\Support\CompanyContext;
 use Filament\Pages\Page;
 
 class CompanyDashboard extends Page
@@ -26,7 +26,7 @@ class CompanyDashboard extends Page
 
     public function mount(): void
     {
-        $companyId = request()->query('company', session('company_id'));
+        $companyId = request()->query('company', app(CompanyContext::class)->id());
 
         if (! $companyId) {
             $this->redirectRoute('filament.admin.resources.companies.index');

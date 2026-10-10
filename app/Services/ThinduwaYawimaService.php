@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Company;
 use App\Models\Nadu;
@@ -27,7 +28,7 @@ class ThinduwaYawimaService
         $template->saveAs($directory.'/'.$fileName);
 
         return Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $case->id,
             'document_type' => 'Thinduwa Yawima',
             'file_name' => $fileName,
@@ -38,7 +39,7 @@ class ThinduwaYawimaService
 
     public function fillTemplate(TemplateProcessor $template, Nadu $case, string $suffix = '', ?Company $company = null): void
     {
-        $company ??= Company::find(session('company_id'));
+        $company ??= app(CompanyContext::class)->company();
 
         $template->setValue('thinduwa_yawima_block'.$suffix, '');
         $template->setValue('/thinduwa_yawima_block'.$suffix, '');

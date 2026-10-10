@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Nadu;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,7 @@ class EnvelopeService
         $template->saveAs($directory.'/'.$fileName);
 
         return Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $case->id,
             'document_type' => 'Envelope',
             'file_name' => $fileName,

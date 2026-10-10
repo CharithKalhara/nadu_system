@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Nadus;
 
+use App\Support\CompanyContext;
 use App\Filament\Resources\Nadus\Pages\CreateNadu;
 use App\Filament\Resources\Nadus\Pages\EditNadu;
 use App\Filament\Resources\Nadus\Pages\ListNadus;
@@ -46,7 +47,7 @@ class NaduResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
-        $companyId = session('company_id');
+        $companyId = app(CompanyContext::class)->id();
 
         return $companyId
             ? $query->where('company_id', $companyId)

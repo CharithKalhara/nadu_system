@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Nadu;
 use App\Models\Company;
 use App\Support\DocumentValueFormatter;
@@ -31,7 +32,7 @@ class BulkMulKola2Service extends BulkThinduwaWrittenService
 
     protected function fillTemplate(TemplateProcessor $template, Nadu $case, array $templateValues = []): void
     {
-        $company = Company::find(session('company_id'));
+        $company = app(CompanyContext::class)->company();
 
         foreach ([
             'first_pages_block' => '',

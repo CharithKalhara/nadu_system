@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Company;
 use App\Models\Nadu;
@@ -14,7 +15,7 @@ class WibagaDinaya2Service
     public function generate(Nadu $case): Document
     {
         $template = new TemplateProcessor(storage_path('app/documents/2_wibaga_dinaya.docx'));
-        $company = Company::find(session('company_id'));
+        $company = app(CompanyContext::class)->company();
 
         $template->setValue('2_wibaga_dinaya_block', '');
         $template->setValue('/2_wibaga_dinaya_block', '');
@@ -37,7 +38,7 @@ class WibagaDinaya2Service
         $template->saveAs($directory.'/'.$fileName);
 
         return Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $case->id,
             'document_type' => '2 Wibaga Dinaya',
             'file_name' => $fileName,

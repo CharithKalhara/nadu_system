@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Documents\Pages;
 
+use App\Support\CompanyContext;
 use App\Filament\Resources\Documents\DocumentResource;
 use App\Models\Company;
 use App\Models\Document;
@@ -32,7 +33,6 @@ use App\Services\ThinduwaYawimaService;
 use App\Services\ThirakawaraJournalService;
 use App\Services\WibagaDinaya1Service;
 use App\Services\WibagaDinaya2Service;
-use App\Support\CompanyContext;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Arr;
@@ -48,7 +48,7 @@ class CreateDocument extends CreateRecord
 
     public function mount(): void
     {
-        if (! request()->query('company', session('company_id'))) {
+        if (! request()->query('company', app(CompanyContext::class)->id())) {
             $this->redirectRoute('filament.admin.resources.companies.index');
 
             return;
@@ -200,13 +200,16 @@ class CreateDocument extends CreateRecord
     protected function getRedirectUrl(): string
     {
         return DocumentResource::getUrl('create', [
-            'company' => session('company_id'),
+            'company' => $this->record->company_id,
         ]);
     }
 
     protected function afterCreate(): void
     {
-        $downloadUrl = route('documents.download', $this->record);
+        $downloadUrl = route('documents.download', [
+            'documentId' => $this->record->getKey(),
+            'company' => $this->record->company_id,
+        ]);
 
         $this->js(<<<JS
             const downloadFrame = document.createElement('iframe');

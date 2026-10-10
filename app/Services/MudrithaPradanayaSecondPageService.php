@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Company;
 use App\Models\Document;
 use App\Models\Nadu;
@@ -24,7 +25,7 @@ class MudrithaPradanayaSecondPageService
         $template->saveAs($directory.'/'.$fileName);
 
         return Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $case->id,
             'document_type' => 'මුද්‍රිත ප්‍රදානය (දෙවන පිට)',
             'file_name' => $fileName,
@@ -40,7 +41,7 @@ class MudrithaPradanayaSecondPageService
 
     public function fillTemplate(TemplateProcessor $template, Nadu $case): void
     {
-        $company = Company::find(session('company_id'));
+        $company = app(CompanyContext::class)->company();
         $values = [
             'pradhanaya_block' => '',
             '/pradhanaya_block' => '',

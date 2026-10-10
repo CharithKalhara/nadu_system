@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Company;
 use App\Models\Nadu;
@@ -14,7 +15,7 @@ class MulKola2Service
     public function generate(Nadu $case, array $templateValues = []): Document
     {
         $template = new TemplateProcessor(storage_path('app/documents/mul_kola_2.docx'));
-        $company = Company::find(session('company_id'));
+        $company = app(CompanyContext::class)->company();
 
         $template->setValue('first_pages_block', '');
         $template->setValue('/first_pages_block', '');
@@ -65,7 +66,7 @@ class MulKola2Service
         $template->saveAs($directory.'/'.$fileName);
 
         return Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $case->id,
             'document_type' => 'Mul Kola 2',
             'file_name' => $fileName,

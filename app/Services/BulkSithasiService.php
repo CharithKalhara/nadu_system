@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Company;
 use App\Models\Document;
 use App\Models\Nadu;
@@ -18,7 +19,7 @@ class BulkSithasiService
         $generated = $this->generateForNaduIds($naduIds);
 
         $document = Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             // A bulk document relates to several cases; retain the first case for
             // compatibility with the existing non-null nadu_id database column.
             'nadu_id' => $this->selectedNadus($naduIds)->value('id'),
@@ -61,7 +62,7 @@ class BulkSithasiService
 
         $template = new TemplateProcessor($templatePath);
         $template->cloneBlock('sithasi_block', $cases->count(), true, true);
-        $company = Company::findOrFail(session('company_id'));
+        $company = app(CompanyContext::class)->companyOrFail();
 
         $cases->each(function (Nadu $case, int $index) use ($template, $company): void {
             app(SithasiService::class)->fillTemplate($template, $case, $company, '#'.($index + 1));
@@ -88,7 +89,7 @@ class BulkSithasiService
     private function selectedNadus(array $naduIds): LazyCollection
     {
         return Nadu::query()
-            ->where('company_id', session('company_id'))
+            ->where('company_id', app(CompanyContext::class)->id())
             ->whereKey($naduIds)
             ->orderBy('id')
             ->lazyById(500);

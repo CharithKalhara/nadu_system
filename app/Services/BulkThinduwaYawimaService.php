@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Company;
 use App\Models\Nadu;
@@ -37,7 +38,7 @@ class BulkThinduwaYawimaService
         $temporaryFiles = [];
 
         try {
-            $company = Company::findOrFail(session('company_id'));
+            $company = app(CompanyContext::class)->companyOrFail();
 
             $documentXml = $cases->map(function (Nadu $case) use ($templatePath, $company, &$temporaryFiles): string {
                 $temporaryPath = tempnam(sys_get_temp_dir(), 'bulk-thinduwa-yawima-');
@@ -72,7 +73,7 @@ class BulkThinduwaYawimaService
         }
 
         $document = Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $cases->first()->id,
             'document_type' => 'Bulk Thinduwa Yawima',
             'file_name' => $fileName,
@@ -89,7 +90,7 @@ class BulkThinduwaYawimaService
     private function selectedNadus(array $naduIds): LazyCollection
     {
         return Nadu::query()
-            ->where('company_id', session('company_id'))
+            ->where('company_id', app(CompanyContext::class)->id())
             ->whereKey($naduIds)
             ->orderBy('id')
             ->lazyById(500);
@@ -163,6 +164,7 @@ class BulkThinduwaYawimaService
     private function pageBreak(\DOMDocument $document): \DOMElement
     {
         $namespace = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
         $paragraph = $document->createElementNS($namespace, 'w:p');
         $run = $document->createElementNS($namespace, 'w:r');
         $break = $document->createElementNS($namespace, 'w:br');

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Nadu;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +59,7 @@ class BulkCoverPageService
         $template->saveAs($directory.DIRECTORY_SEPARATOR.$fileName);
 
         $document = Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $cases->first()->id,
             'document_type' => 'Bulk Cover Page',
             'file_name' => $fileName,
@@ -75,7 +76,7 @@ class BulkCoverPageService
     private function selectedNadus(array $naduIds): LazyCollection
     {
         return Nadu::query()
-            ->where('company_id', session('company_id'))
+            ->where('company_id', app(CompanyContext::class)->id())
             ->whereKey($naduIds)
             ->orderBy('id')
             ->lazyById(500);

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Nadu;
 use Illuminate\Support\Facades\Auth;
@@ -68,7 +69,7 @@ class BulkThinduwaWrittenService
         }
 
         $document = Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $cases->first()->id,
             'document_type' => $this->documentType(),
             'file_name' => $fileName,
@@ -113,7 +114,7 @@ class BulkThinduwaWrittenService
 
     private function selectedNadus(array $naduIds): LazyCollection
     {
-        return Nadu::query()->where('company_id', session('company_id'))->whereKey($naduIds)->orderBy('id')->lazyById(500);
+        return Nadu::query()->where('company_id', app(CompanyContext::class)->id())->whereKey($naduIds)->orderBy('id')->lazyById(500);
     }
 
     private function readDocumentXml(string $path): string
@@ -171,6 +172,7 @@ class BulkThinduwaWrittenService
     private function pageBreak(\DOMDocument $document): \DOMElement
     {
         $namespace = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+
         $paragraph = $document->createElementNS($namespace, 'w:p');
         $run = $document->createElementNS($namespace, 'w:r');
         $break = $document->createElementNS($namespace, 'w:br');

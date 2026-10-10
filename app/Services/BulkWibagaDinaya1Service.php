@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Company;
 use App\Models\Nadu;
 use Carbon\Carbon;
@@ -31,7 +32,7 @@ class BulkWibagaDinaya1Service extends BulkThinduwaWrittenService
 
 	protected function fillTemplate(TemplateProcessor $t, Nadu $c, array $v = []): void
 	{
-		$company = Company::find(session('company_id'));
+		$company = app(CompanyContext::class)->company();
 
 		$t->setValue('1_wibaga_dinaya_block', '');
 		$t->setValue('/1_wibaga_dinaya_block', '');

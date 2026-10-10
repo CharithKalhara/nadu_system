@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\CompanyContext;
 use App\Models\Company;
 use App\Models\Document;
 use App\Models\Nadu;
@@ -20,7 +21,7 @@ class SithasiService
 
         $template->setValue('sithasi_block', '');
         $template->setValue('/sithasi_block', '');
-        $this->fillTemplate($template, $case, Company::findOrFail(session('company_id')));
+        $this->fillTemplate($template, $case, app(CompanyContext::class)->companyOrFail());
 
         // Create output directory if it doesn't exist
         $directory = storage_path('app/public/summons');
@@ -38,7 +39,7 @@ class SithasiService
 
         // Save document record to database
         return Document::create([
-            'company_id' => session('company_id'),
+            'company_id' => app(CompanyContext::class)->id(),
             'nadu_id' => $case->id,
             'document_type' => 'Sithasi',
             'file_name' => $fileName,

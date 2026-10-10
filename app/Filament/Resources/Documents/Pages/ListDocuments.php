@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Documents\Pages;
 
-use App\Filament\Resources\Documents\DocumentResource;
 use App\Support\CompanyContext;
+use App\Filament\Resources\Documents\DocumentResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -15,7 +15,7 @@ class ListDocuments extends ListRecords
 
     public function mount(): void
     {
-        $companyId = request()->query('company', session('company_id'));
+        $companyId = request()->query('company', app(CompanyContext::class)->id());
 
         if (! $companyId) {
             $this->redirectRoute('filament.admin.resources.companies.index');
@@ -31,7 +31,10 @@ class ListDocuments extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->url(fn (): string => DocumentResource::getUrl('create', [
+                    'company' => app(CompanyContext::class)->id(),
+                ])),
         ];
     }
 }

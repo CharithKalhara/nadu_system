@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Documents;
 
+use App\Support\CompanyContext;
 use App\Filament\Resources\Documents\Pages\CreateDocument;
 use App\Filament\Resources\Documents\Pages\EditDocument;
 use App\Filament\Resources\Documents\Pages\ListDocuments;
@@ -45,7 +46,7 @@ class DocumentResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
-        $companyId = session('company_id');
+        $companyId = app(CompanyContext::class)->id();
 
         return $companyId
             ? $query->where('company_id', $companyId)
