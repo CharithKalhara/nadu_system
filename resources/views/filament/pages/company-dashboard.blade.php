@@ -59,6 +59,27 @@
                         <span class="quick-action-card__count-label">Total documents</span>
                     </span>
                 </a>
+
+                <a href="{{ $this->getCompanySettingsUrl() }}" class="quick-action-card quick-action-card--settings">
+                    <span class="quick-action-card__decoration" aria-hidden="true"></span>
+
+                    <span class="quick-action-card__icon">
+                        <x-filament::icon icon="heroicon-o-cog-6-tooth" />
+                    </span>
+
+                    <span class="quick-action-card__content">
+                        <span class="quick-action-card__topline">
+                            <span>
+                                <span class="quick-action-card__title">Company Settings</span>
+                                <span class="quick-action-card__description">Manage this company’s document defaults and details.</span>
+                            </span>
+
+                            <x-filament::icon icon="heroicon-o-arrow-right" class="quick-action-card__arrow" />
+                        </span>
+
+                        <span class="quick-action-card__count-label">Edit company information</span>
+                    </span>
+                </a>
             </div>
         </section>
     </div>

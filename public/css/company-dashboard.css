@@ -223,6 +223,12 @@
 .quick-action-card--documents .quick-action-card__count { color: #059669; }
 .quick-action-card--documents:hover .quick-action-card__arrow { color: #059669; }
 
+.quick-action-card--settings:hover { border-color: rgba(79, 70, 229, .35); }
+.quick-action-card--settings .quick-action-card__decoration { background: rgba(99, 102, 241, .12); }
+.quick-action-card--settings .quick-action-card__icon { background: #eef2ff; color: #4f46e5; }
+.quick-action-card--settings .quick-action-card__count-label { margin-top: auto; }
+.quick-action-card--settings:hover .quick-action-card__arrow { color: #4f46e5; }
+
 @media (max-width: 768px) {
     .company-dashboard__heading { align-items: flex-start; flex-direction: column; }
     .quick-actions__grid { grid-template-columns: 1fr; }
