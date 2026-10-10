@@ -32,6 +32,7 @@ use App\Services\ThinduwaYawimaService;
 use App\Services\ThirakawaraJournalService;
 use App\Services\WibagaDinaya1Service;
 use App\Services\WibagaDinaya2Service;
+use App\Support\CompanyContext;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Arr;
@@ -45,6 +46,19 @@ class CreateDocument extends CreateRecord
 
     protected static bool $canCreateAnother = false;
 
+    public function mount(): void
+    {
+        if (! request()->query('company', session('company_id'))) {
+            $this->redirectRoute('filament.admin.resources.companies.index');
+
+            return;
+        }
+
+        app(CompanyContext::class)->resolve(request());
+
+        parent::mount();
+    }
+
     public function create(bool $another = false): void
     {
         // Keep this page available for the next document while afterCreate()
@@ -54,12 +68,7 @@ class CreateDocument extends CreateRecord
 
     protected function handleRecordCreation(array $data): Document
     {
-        $company = Company::findOrFail(session('company_id'));
-
-        session([
-            'company_id' => $company->id,
-            'company_table' => $company->table_name,
-        ]);
+        $company = app(CompanyContext::class)->resolve(request());
 
         if ($data['document_type'] === 'sithasi') {
             $company->update(Arr::only($data, [

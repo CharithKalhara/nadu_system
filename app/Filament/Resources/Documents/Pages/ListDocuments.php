@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Documents\Pages;
 
 use App\Filament\Resources\Documents\DocumentResource;
-use App\Models\Company;
+use App\Support\CompanyContext;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -23,12 +23,7 @@ class ListDocuments extends ListRecords
             return;
         }
 
-        $company = Company::findOrFail($companyId);
-
-        session([
-            'company_id' => $company->id,
-            'company_table' => $company->table_name,
-        ]);
+        app(CompanyContext::class)->resolve(request());
 
         parent::mount();
     }

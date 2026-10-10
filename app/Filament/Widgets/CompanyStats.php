@@ -14,7 +14,7 @@ class CompanyStats extends StatsOverviewWidget
     {
         $companyId = request()->query('company');
 
-        if (! $companyId) {
+        if (filter_var($companyId, FILTER_VALIDATE_INT) === false || (int) $companyId < 1) {
             return [];
         }
 
@@ -26,15 +26,23 @@ class CompanyStats extends StatsOverviewWidget
 
         $table = $company->table_name;
 
+        if (! preg_match('/^company_\d{4}_cases$/', $table)
+            || ! Schema::connection('companies')->hasTable($table)
+            || ! Schema::connection('companies')->hasColumn($table, 'company_id')) {
+            return [];
+        }
+
         // Total cases
         $caseCount = DB::connection('companies')
             ->table($table)
+            ->where('company_id', $company->id)
             ->count();
 
         // Open cases
         $openCases = Schema::connection('companies')->hasColumn($table, 'status')
             ? DB::connection('companies')
                 ->table($table)
+                ->where('company_id', $company->id)
                 ->where('status', 'Open')
                 ->count()
             : $caseCount;
@@ -45,11 +53,14 @@ class CompanyStats extends StatsOverviewWidget
         if (Schema::connection('companies')->hasColumn($table, 'total')) {
             $totalDebt = DB::connection('companies')
                 ->table($table)
+                ->where('company_id', $company->id)
                 ->sum('total');
         }
 
         // Documents
-        $documentCount = DB::table('documents')->count();
+        $documentCount = DB::table('documents')
+            ->where('company_id', $company->id)
+            ->count();
 
         return [
             Stat::make('Total Cases', number_format($caseCount))

@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\Company;
 use App\Models\Document;
 use App\Models\Nadu;
+use App\Support\CompanyContext;
 use Filament\Pages\Page;
 
 class CompanyDashboard extends Page
@@ -33,12 +34,7 @@ class CompanyDashboard extends Page
             return;
         }
 
-        $this->company = Company::findOrFail($companyId);
-
-        session([
-            'company_id' => $this->company->id,
-            'company_table' => $this->company->table_name,
-        ]);
+        $this->company = app(CompanyContext::class)->resolve(request());
 
         $this->naduCount = Nadu::query()
             ->where('company_id', $this->company->id)

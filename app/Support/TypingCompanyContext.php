@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class TypingCompanyContext
 {
@@ -15,7 +16,11 @@ class TypingCompanyContext
 
         $company = Company::query()->findOrFail((int) $companyId);
 
-        abort_unless(preg_match('/^company_\d{4}_cases$/', $company->table_name), 404);
+        abort_unless(
+            preg_match('/^company_\d{4}_cases$/', $company->table_name) === 1
+                && Schema::connection('companies')->hasTable($company->table_name),
+            404,
+        );
 
         session([
             'typing_company_id' => $company->getKey(),
