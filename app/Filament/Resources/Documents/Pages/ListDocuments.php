@@ -31,10 +31,7 @@ class ListDocuments extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()
-                ->url(fn (): string => DocumentResource::getUrl('create', [
-                    'company' => session('company_id'),
-                ])),
+            CreateAction::make(),
         ];
     }
 }

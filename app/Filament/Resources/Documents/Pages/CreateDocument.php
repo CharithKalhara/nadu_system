@@ -206,10 +206,7 @@ class CreateDocument extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $downloadUrl = route('documents.download', [
-            'documentId' => $this->record->getKey(),
-            'company' => $this->record->company_id,
-        ]);
+        $downloadUrl = route('documents.download', $this->record);
 
         $this->js(<<<JS
             const downloadFrame = document.createElement('iframe');
