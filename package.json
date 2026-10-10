@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "name": "nadu_system",
-    "version": "1.0.16",
+    "version": "1.0.0",
     "description": "Nadu System Desktop Application",
     "main": "electron/main.js",
     "scripts": {

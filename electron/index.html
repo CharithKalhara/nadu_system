@@ -1,18 +1,42 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'none';">
     <title>Nadu System</title>
-    <link rel="stylesheet" href="app.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+
 <body>
-    <main id="app" aria-live="polite">
-        <section class="startup"><span class="startup__mark">N</span><span>Loading Nadu System…</span></section>
-    </main>
-    <dialog id="modal" class="modal"><form method="dialog" id="modal-form"><header class="modal__header"><div><p class="eyebrow" id="modal-kicker"></p><h2 id="modal-title"></h2></div><button class="icon-button" value="cancel" aria-label="Close">×</button></header><div class="modal__body" id="modal-body"></div><footer class="modal__footer" id="modal-footer"></footer></form></dialog>
-    <div id="toast" class="toast" role="status"></div>
-    <script src="app.js" defer></script>
+
+<div class="container">
+    <div class="card">
+        <h1>Nadu System</h1>
+        <p>Electron desktop application</p>
+        <p>Electron is working successfully.</p>
+    </div>
+</div>
+
 </body>
 </html>
