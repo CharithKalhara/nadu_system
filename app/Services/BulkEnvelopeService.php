@@ -61,9 +61,10 @@ class BulkEnvelopeService
         }
 
         $temporaryFiles = [];
+        $teeraka = app(CompanyContext::class)->company()?->teeraka ?? '';
 
         try {
-            $documentXml = $cases->map(function (Nadu $case) use ($templatePath, &$temporaryFiles): string {
+            $documentXml = $cases->map(function (Nadu $case) use ($templatePath, $teeraka, &$temporaryFiles): string {
                 $temporaryPath = tempnam(sys_get_temp_dir(), 'bulk-envelope-');
 
                 if ($temporaryPath === false) {
@@ -72,7 +73,7 @@ class BulkEnvelopeService
 
                 $temporaryFiles[] = $temporaryPath;
                 $template = new TemplateProcessor($templatePath);
-                $this->fillTemplate($template, $case);
+                $this->fillTemplate($template, $case, $teeraka);
                 $template->saveAs($temporaryPath);
 
                 return $this->readDocumentXml($temporaryPath);
@@ -103,9 +104,10 @@ class BulkEnvelopeService
         ];
     }
 
-    private function fillTemplate(TemplateProcessor $template, Nadu $case): void
+    private function fillTemplate(TemplateProcessor $template, Nadu $case, string $teeraka): void
     {
         $template->setValue('envelop', '');
+        $template->setValue('තීරක', $teeraka);
         $template->setValue('/envelop', '');
         $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');

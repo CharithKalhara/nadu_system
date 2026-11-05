@@ -15,6 +15,7 @@ class EnvelopeService
         $template = new TemplateProcessor(storage_path('app/documents/envelop_format.docx'));
 
         $template->setValue('envelop', '');
+        $template->setValue('තීරක', app(CompanyContext::class)->company()?->teeraka ?? '');
         $template->setValue('/envelop', '');
         $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
