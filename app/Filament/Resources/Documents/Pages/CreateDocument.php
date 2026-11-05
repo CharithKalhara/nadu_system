@@ -80,7 +80,7 @@ class CreateDocument extends CreateRecord
             ]));
         }
 
-        if ($data['document_type'] === 'thinduwa_yawima') {
+        if (in_array($data['document_type'], ['envelope', 'thinduwa_yawima'], true)) {
             $company->update(Arr::only($data, ['teeraka_name_with_initials']));
         }
 

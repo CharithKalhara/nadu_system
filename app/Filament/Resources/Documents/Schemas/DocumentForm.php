@@ -62,8 +62,8 @@ class DocumentForm
                 TextInput::make('teeraka_name_with_initials')
                     ->label('තීරක නම (මුලකුරු)')
                     ->default(fn (): ?string => self::company()?->teeraka_name_with_initials)
-                    ->visible(fn (Get $get): bool => $get('document_type') === 'thinduwa_yawima')
-                    ->required(fn (Get $get): bool => $get('document_type') === 'thinduwa_yawima'),
+                    ->visible(fn (Get $get): bool => in_array($get('document_type'), ['envelope', 'thinduwa_yawima'], true))
+                    ->required(fn (Get $get): bool => in_array($get('document_type'), ['envelope', 'thinduwa_yawima'], true)),
 
                 TextInput::make('niyojithaya')
                     ->label('නියෝජිතයා')

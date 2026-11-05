@@ -61,7 +61,8 @@ class BulkEnvelopeService
         }
 
         $temporaryFiles = [];
-        $teeraka = app(CompanyContext::class)->company()?->teeraka ?? '';
+        $company = app(CompanyContext::class)->company();
+        $teeraka = $company?->teeraka_name_with_initials ?? '';
 
         try {
             $documentXml = $cases->map(function (Nadu $case) use ($templatePath, $teeraka, &$temporaryFiles): string {
