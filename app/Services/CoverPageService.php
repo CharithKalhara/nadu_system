@@ -13,7 +13,10 @@ class CoverPageService
     public function generate(Nadu $case): Document
     {
         $template = new TemplateProcessor(storage_path('app/documents/cover_page.docx'));
+        $company = app(CompanyContext::class)->company();
 
+        $template->setValue('නඩු_අංකය_ format ', $company?->nadu_ankaya_format ?? '');
+        $template->setValue('සමිතිය', $company?->company_name ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');
         $template->setValue('ඇපකරු_2', $case->aepakaru2_nama ?? '');

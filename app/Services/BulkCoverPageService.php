@@ -40,9 +40,13 @@ class BulkCoverPageService
             throw new RuntimeException('The cover page repeat block could not be found in the template.');
         }
 
-        $cases->each(function (Nadu $case, int $index) use ($template): void {
+        $company = app(CompanyContext::class)->company();
+
+        $cases->each(function (Nadu $case, int $index) use ($template, $company): void {
             $number = $index + 1;
 
+            $template->setValue("නඩු_අංකය_ format #{$number}", $company?->nadu_ankaya_format ?? '');
+            $template->setValue("සමිතිය#{$number}", $company?->company_name ?? '');
             $template->setValue("නඩු_අංකය#{$number}", $case->nadu_ankaya ?? '');
             $template->setValue("ණයකරු_1#{$number}", $case->nayakaru1_nama ?? '');
             $template->setValue("ඇපකරු_1#{$number}", $case->aepakaru1_nama ?? '');
