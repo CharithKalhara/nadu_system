@@ -27,7 +27,7 @@ class BulkCoverPageService
             throw new RuntimeException('The cover page template was not found.');
         }
 
-        $cases = $this->selectedNadus($naduIds)->values();
+        $cases = $this->selectedNadus($naduIds)->collect()->values();
 
         if ($cases->isEmpty()) {
             throw new RuntimeException('No Nadu records were found for the current company.');
@@ -35,23 +35,20 @@ class BulkCoverPageService
 
         $template = new TemplateProcessor($templatePath);
         $this->trimBlockMarkerWhitespace($template, 'cover_page_block');
-
-        if ($template->cloneBlock('cover_page_block', $cases->count(), true, true) === null) {
-            throw new RuntimeException('The cover page repeat block could not be found in the template.');
-        }
-
         $company = app(CompanyContext::class)->company();
 
-        $cases->each(function (Nadu $case, int $index) use ($template, $company): void {
-            $number = $index + 1;
+        $replacements = $cases->map(fn (Nadu $case): array => [
+            'නඩු_අංකය_ format ' => $company?->nadu_ankaya_format ?? '',
+            'සමිතිය' => $company?->company_name ?? '',
+            'නඩු_අංකය' => $case->nadu_ankaya ?? '',
+            'ණයකරු_1' => $case->nayakaru1_nama ?? '',
+            'ඇපකරු_1' => $case->aepakaru1_nama ?? '',
+            'ඇපකරු_2' => $case->aepakaru2_nama ?? '',
+        ])->all();
 
-            $template->setValue("නඩු_අංකය_ format #{$number}", $company?->nadu_ankaya_format ?? '');
-            $template->setValue("සමිතිය#{$number}", $company?->company_name ?? '');
-            $template->setValue("නඩු_අංකය#{$number}", $case->nadu_ankaya ?? '');
-            $template->setValue("ණයකරු_1#{$number}", $case->nayakaru1_nama ?? '');
-            $template->setValue("ඇපකරු_1#{$number}", $case->aepakaru1_nama ?? '');
-            $template->setValue("ඇපකරු_2#{$number}", $case->aepakaru2_nama ?? '');
-        });
+        if ($template->cloneBlock('cover_page_block', $cases->count(), true, false, $replacements) === null) {
+            throw new RuntimeException('The cover page repeat block could not be found in the template.');
+        }
 
         $directory = storage_path('app/public/cover-pages');
 
