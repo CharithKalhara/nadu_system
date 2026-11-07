@@ -17,6 +17,7 @@ class CoverPageService
 
         $template->setValue('නඩු_අංකය_ format ', $company?->nadu_ankaya_format ?? '');
         $template->setValue('සමිතිය', $company?->company_name ?? '');
+        $template->setValue('තීරක', $company?->teeraka_name_with_initials ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');

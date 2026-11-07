@@ -43,6 +43,7 @@ class BulkCoverPageService
             'නඩු_අංකය' => $case->nadu_ankaya ?? '',
             'ණයකරු_1' => $case->nayakaru1_nama ?? '',
             'ණයකරු_2' => $case->nayakaru2_nama ?? '',
+            'තීරක' => $company?->teeraka_name_with_initials ?? '',
             'ඇපකරු_1' => $case->aepakaru1_nama ?? '',
             'ඇපකරු_2' => $case->aepakaru2_nama ?? '',
         ])->all();
