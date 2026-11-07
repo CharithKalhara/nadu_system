@@ -36,6 +36,8 @@ class BulkWibagaDinaya1Service extends BulkThinduwaWrittenService
 
 		$t->setValue('1_wibaga_dinaya_block', '');
 		$t->setValue('/1_wibaga_dinaya_block', '');
+		$t->setValue('නඩු_අංකය_ format ', $company?->nadu_ankaya_format ?? '');
+		$t->setValue('නඩු_අංකය', $c->nadu_ankaya ?? '');
 
 		$t->setValue('ණයකරු_1', $c->nayakaru1_nama ?? '');
 		$t->setValue('ණයකරු_2', $c->nayakaru2_nama ?? '');
