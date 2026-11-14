@@ -38,6 +38,7 @@ class StatementService
 
     public function fillTemplate(TemplateProcessor $template, Nadu $case): void
     {
+        $company = app(CompanyContext::class)->company();
         $loanDate = $case->dun_dinaya
             ? Carbon::parse($case->dun_dinaya)->format('Y-m-d')
             : '';
@@ -47,6 +48,7 @@ class StatementService
         $monthlyInstallment = $term > 0 ? number_format($total / $term, 2) : '';
 
         $values = [
+            'සමිතිය' => $company?->company_name ?? '',
             'නඩු_අංකය' => $case->nadu_ankaya ?? '',
             'ණයකරු_1' => $case->nayakaru1_nama ?? '',
             'ණයකරු1' => $case->nayakaru1_nama ?? '',
