@@ -56,7 +56,16 @@ class CaseController extends Controller
     public function store(StoreMobileCaseRequest $request, MobileCompanyAccess $companies): JsonResponse
     {
         $validated = $request->validated();
+        Log::info('mobile_api.case.submission_attempt', [
+            'user_id' => $request->user()->getKey(),
+            'company_id' => $validated['company_id'],
+        ]);
         $company = $companies->resolve($request, $validated['company_id']);
+        Log::info('mobile_api.case.company_resolved', [
+            'user_id' => $request->user()->getKey(),
+            'company_id' => $company->getKey(),
+            'table_name' => $company->table_name,
+        ]);
         $caseData = Arr::only($validated, MobileCaseFieldCatalog::names());
         $key = $request->header('Idempotency-Key');
 
