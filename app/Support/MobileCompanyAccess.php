@@ -31,7 +31,10 @@ class MobileCompanyAccess
 
         // Existing Nadu scopes resolve their dynamic table from CompanyContext.
         // Set this only after validating the company against the typing queue.
-        $request->query->set('company', (string) $company->getKey());
+        // FormRequest is a clone, while existing model hooks read the base request.
+        $companyId = (string) $company->getKey();
+        $request->query->set('company', $companyId);
+        app('request')->query->set('company', $companyId);
         app(CompanyContext::class)->activate($company);
 
         return $company;
