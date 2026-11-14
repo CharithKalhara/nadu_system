@@ -28,7 +28,7 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken(
-            $credentials['device_name'] ?: 'Nadu Mobile',
+            ($credentials['device_name'] ?? null) ?: 'Nadu Mobile',
             ['mobile:use'],
             now()->addMinutes((int) config('sanctum.expiration', 10080)),
         );
