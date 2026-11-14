@@ -8,7 +8,7 @@ class StoreMobileCaseRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->role === 'typing';
+        return $this->user() !== null;
     }
 
     /** @return array<string, list<string>> */
