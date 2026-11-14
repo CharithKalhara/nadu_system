@@ -21,7 +21,7 @@ class WibagaDinaya2Service
         $template->setValue('2_wibaga_dinaya_block', '');
         $template->setValue('/2_wibaga_dinaya_block', '');
         $template->setValue('නඩු_අංකය_ format ', rtrim($company?->nadu_ankaya_format ?? '', '/'));
-        $template->setValue('දිනය', SithasiValueFormatter::dateParts($company?->wibhaga_dinaya)['dinaya']);
+        $template->setValue('දිනය', $this->formatDate($company?->wibhaga_dinaya));
         $template->setValue('වරුව', SithasiValueFormatter::waruwa($company?->welawa));
         $template->setValue('වෙලාව', SithasiValueFormatter::time($company?->welawa));
         $template->setValue('නියෝජිත', $company?->niyojithaya ?? '');
