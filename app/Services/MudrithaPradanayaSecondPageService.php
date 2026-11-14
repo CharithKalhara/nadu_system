@@ -45,6 +45,7 @@ class MudrithaPradanayaSecondPageService
         $values = [
             'pradhanaya_block' => '',
             '/pradhanaya_block' => '',
+            'නියෝජිත' => $company?->niyojithaya ?? '',
             'නඩු_අංකය_ format ' => $company?->nadu_ankaya_format ?? '',
             'නඩු_අංකය' => $case->nadu_ankaya ?? '',
             'ණයකරු_1' => $case->nayakaru1_nama ?? '',
