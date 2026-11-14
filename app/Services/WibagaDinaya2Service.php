@@ -6,6 +6,7 @@ use App\Support\CompanyContext;
 use App\Models\Document;
 use App\Models\Company;
 use App\Models\Nadu;
+use App\Support\SithasiValueFormatter;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -19,6 +20,13 @@ class WibagaDinaya2Service
 
         $template->setValue('2_wibaga_dinaya_block', '');
         $template->setValue('/2_wibaga_dinaya_block', '');
+        $template->setValue('නඩු_අංකය_ format ', $company?->nadu_ankaya_format ?? '');
+        $template->setValue('දිනය', SithasiValueFormatter::dateParts($company?->wibhaga_dinaya)['dinaya']);
+        $template->setValue('වරුව', SithasiValueFormatter::waruwa($company?->welawa));
+        $template->setValue('වෙලාව', SithasiValueFormatter::time($company?->welawa));
+        $template->setValue('නියෝජිත', $company?->niyojithaya ?? '');
+        $template->setValue('first_sithasiya_date', $this->formatDate($company?->first_sithasiya_date));
+        $template->setValue('second_sithasiya_date', $this->formatDate($company?->second_sithasiya_date));
         $template->setValue(' නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
