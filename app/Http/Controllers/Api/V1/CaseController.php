@@ -20,14 +20,31 @@ class CaseController extends Controller
     {
         $filters = $request->validate([
             'company_id' => ['required', 'integer', 'min:1'],
+            'search' => ['nullable', 'string', 'max:255'],
             'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
             'page' => ['nullable', 'integer', 'min:1'],
         ]);
         $company = $companies->resolve($request, $filters['company_id']);
-        $page = Nadu::query()
-            ->where('company_id', $company->getKey())
-            ->latest('created_at')
-            ->paginate($filters['per_page'] ?? 15);
+        $query = Nadu::query()->where('company_id', $company->getKey());
+        $search = trim($filters['search'] ?? '');
+
+        if ($search !== '') {
+            $query->where(function ($query) use ($search): void {
+                $pattern = '%'.$search.'%';
+
+                foreach ([
+                    'nadu_ankaya',
+                    'nayakaru1_nama',
+                    'nayakaru2_nama',
+                    'aepakaru1_nama',
+                    'aepakaru2_nama',
+                ] as $column) {
+                    $query->orWhere($column, 'like', $pattern);
+                }
+            });
+        }
+
+        $page = $query->latest('created_at')->paginate($filters['per_page'] ?? 15);
 
         return response()->json([
             'data' => array_map(
