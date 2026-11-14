@@ -27,15 +27,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid email or password.'], 401);
         }
 
-        if ($user->role !== 'typing') {
-            Log::notice('mobile_api.auth.role_denied', [
-                'user_id' => $user->getKey(),
-                'ip' => $request->ip(),
-            ]);
-
-            return response()->json(['message' => 'This account is not authorised for mobile entry.'], 403);
-        }
-
         $token = $user->createToken(
             $credentials['device_name'] ?: 'Nadu Mobile',
             ['mobile:use'],

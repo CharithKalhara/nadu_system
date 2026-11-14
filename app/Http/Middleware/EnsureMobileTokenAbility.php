@@ -6,14 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureMobileTypingStaff
+class EnsureMobileTokenAbility
 {
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
 
-        if (! $user || $user->role !== 'typing') {
-            return response()->json(['message' => 'This account is not authorised for mobile entry.'], 403);
+        if (! $user) {
+            return response()->json(['message' => 'This token is not authorised for mobile entry.'], 403);
         }
 
         $token = $user->currentAccessToken();

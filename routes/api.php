@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CaseController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\ReferenceDataController;
-use App\Http\Middleware\EnsureMobileTypingStaff;
+use App\Http\Middleware\EnsureMobileTokenAbility;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
@@ -14,7 +14,7 @@ Route::prefix('v1')->group(function (): void {
 
     Route::middleware([
         'auth:sanctum',
-        EnsureMobileTypingStaff::class,
+        EnsureMobileTokenAbility::class,
         'throttle:120,1',
     ])->group(function (): void {
         Route::post('auth/logout', [AuthController::class, 'logout']);
