@@ -27,7 +27,7 @@ class WibagaDinaya2Service
         $template->setValue('නියෝජිත', $company?->niyojithaya ?? '');
         $template->setValue('first_sithasiya_date', $this->formatDate($company?->first_sithasiya_date));
         $template->setValue('second_sithasiya_date', $this->formatDate($company?->second_sithasiya_date));
-        $template->setValue(' නඩු_අංකය', $case->nadu_ankaya ?? '');
+        $template->setValue('නඩු_අංකය', $case->nadu_ankaya ?? '');
         $template->setValue('ණයකරු_1', $case->nayakaru1_nama ?? '');
         $template->setValue('ණයකරු_2', $case->nayakaru2_nama ?? '');
         $template->setValue('ඇපකරු_1', $case->aepakaru1_nama ?? '');
