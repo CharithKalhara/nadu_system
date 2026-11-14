@@ -27,6 +27,7 @@ Success responses wrap the result in `data`. Validation failures use Laravel's J
 | `GET` | `/api/v1/reference-data` | Sanctum token with `mobile:use` ability | Return the case form sections and field descriptors |
 | `GET` | `/api/v1/cases?company_id={id}&per_page=5` | Sanctum token with `mobile:use` ability | Paginated recent case data for one active typing company |
 | `GET` | `/api/v1/cases/{id}?company_id={id}` | Sanctum token with `mobile:use` ability | Return a case only from the selected active typing company |
+| `PUT` | `/api/v1/cases/{id}` | Sanctum token with `mobile:use` ability | Validate and update a case in the selected active typing company |
 | `POST` | `/api/v1/cases` | Sanctum token with `mobile:use` ability | Validate and create a case in the existing company-specific table |
 | `POST` | `/api/v1/attachments` | Sanctum token with `mobile:use` ability | Upload a PDF or image to a case the user can access |
 

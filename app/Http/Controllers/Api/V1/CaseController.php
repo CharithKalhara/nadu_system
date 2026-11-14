@@ -53,6 +53,29 @@ class CaseController extends Controller
         return response()->json(['data' => MobileCaseFieldCatalog::serialize($case)]);
     }
 
+    public function update(
+        StoreMobileCaseRequest $request,
+        string $id,
+        MobileCompanyAccess $companies,
+    ): JsonResponse {
+        $validated = $request->validated();
+        $company = $companies->resolve($request, $validated['company_id']);
+        $case = Nadu::query()
+            ->where('company_id', $company->getKey())
+            ->findOrFail($id);
+
+        $case->fill(Arr::only($validated, MobileCaseFieldCatalog::names()));
+        $case->save();
+
+        Log::info('mobile_api.case.updated', [
+            'user_id' => $request->user()->getKey(),
+            'company_id' => $company->getKey(),
+            'case_id' => $case->getKey(),
+        ]);
+
+        return response()->json(['data' => MobileCaseFieldCatalog::serialize($case)]);
+    }
+
     public function store(StoreMobileCaseRequest $request, MobileCompanyAccess $companies): JsonResponse
     {
         $validated = $request->validated();

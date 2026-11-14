@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function (): void {
         Route::get('cases', [CaseController::class, 'index']);
         Route::post('cases', [CaseController::class, 'store']);
         Route::get('cases/{id}', [CaseController::class, 'show'])->whereNumber('id');
+        Route::put('cases/{id}', [CaseController::class, 'update'])->whereNumber('id');
         Route::post('attachments', [AttachmentController::class, 'store']);
     });
 });
