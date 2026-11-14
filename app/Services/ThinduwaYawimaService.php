@@ -52,7 +52,7 @@ class ThinduwaYawimaService
         $template->setValue('තීන්දුව_ලබාදුන්_දිනය'.$suffix, str_replace('-', '/', (string) ($company?->thinduwa_labadena_dinaya ?? '')));
         $template->setValue('ගෙවිය_යුතු_දිනය'.$suffix, str_replace('-', '/', (string) ($company?->gewia_yuthu_dinaya ?? '')));
         $template->setValue('අභියාචනය_ඉදිරිපත්_කළ_යුතු_දිනය'.$suffix, str_replace('-', '/', (string) ($company?->abiyachana_idiripath_kala_yuthu_dinaya ?? '')));
-        $template->setValue('තැපැල් ගාස්තු'.$suffix, number_format((float) ($company?->thepal_gasthu ?? 0), 2));
+        $template->setValue('තැපැල් ගාස්තු'.$suffix, number_format((float) ($company?->apal_gasthu ?? 0), 2));
         $template->setValue('ණයකරු_1'.$suffix, $case->nayakaru1_nama ?? '');
         $this->setSecondDebtorParagraph($template, $case, $suffix);
         $template->setValue('ඇපකරු_1'.$suffix, $case->aepakaru1_nama ?? '');
