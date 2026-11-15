@@ -215,7 +215,9 @@ class MudrithaPradanayaService
                 $paragraphText .= $textNode->textContent;
             }
 
-            if (! str_contains($paragraphText, $macro)) {
+            // The party macros also appear in the long narrative paragraph on
+            // page 1. Only change the dedicated numbered "නම:" row on page 2.
+            if (! str_contains($paragraphText, $macro) || ! str_contains($paragraphText, 'නම:')) {
                 continue;
             }
 
