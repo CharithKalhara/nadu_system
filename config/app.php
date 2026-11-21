@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'typing_domain' => env('TYPING_DOMAIN', 'typing.naduoffice.com.lk'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

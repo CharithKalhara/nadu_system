@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\BlockTypingHostFromAdmin;
 use App\Filament\Widgets\SystemOverview;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -39,6 +40,7 @@ class AdminPanelProvider extends PanelProvider
                 SystemOverview::class,
             ])
             ->middleware([
+                BlockTypingHostFromAdmin::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,

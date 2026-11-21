@@ -25,7 +25,8 @@ class TypingPanelProvider extends PanelProvider
     {
         return $panel
             ->id('typing')
-            ->path('typing')
+            ->domain(config('app.typing_domain'))
+            ->path('')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
